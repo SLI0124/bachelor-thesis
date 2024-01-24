@@ -118,8 +118,8 @@ def save_all_parking_spots_to_individual_file(input_file_path: str, output_folde
         # use perspective transform to get the parking spot
         result = modify_image_using_perspective(input_file_path, spot)
         # save the image
-        file_name = input_file_path.split("/")[-1]
-        cv2.imwrite(f"{output_folder_path}/{file_name}{counter}.jpg", result)
+        file_name = input_file_path.split("/")[-1][:-4]
+        cv2.imwrite(f"{output_folder_path}/{file_name}-{counter}.jpg", result)
         counter += 1
 
 
