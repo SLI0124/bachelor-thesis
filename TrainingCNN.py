@@ -55,6 +55,10 @@ def train_model(model, train_loader, test_loader, device, num_epochs, learning_r
     train_count, test_count = len(train_loader.dataset), len(test_loader.dataset)
     best_accuracy = 0.0
 
+    plot_train_loss = []
+    plot_train_accuracy = []
+    plot_test_accuracy = []
+
     for epoch in range(num_epochs):
         model.train()
         train_accuracy, train_loss = 0.0, 0.0
@@ -90,9 +94,23 @@ def train_model(model, train_loader, test_loader, device, num_epochs, learning_r
         print(
             f'Epoch: {epoch} Train Loss: {train_loss} Train Accuracy: {train_accuracy} Test Accuracy: {test_accuracy}')
 
+        plot_train_loss.append(train_loss)
+        plot_train_accuracy.append(train_accuracy)
+        plot_test_accuracy.append(test_accuracy)
+
         if test_accuracy > best_accuracy:
             torch.save(model.state_dict(), 'best_checkpoint.model')
             best_accuracy = test_accuracy
+
+    # plot loss and accuracy
+    plt.plot(plot_train_loss, label='train loss')
+    plt.plot(plot_train_accuracy, label='train accuracy')
+    plt.plot(plot_test_accuracy, label='test accuracy')
+    plt.legend()
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss/Accuracy')
+    plt.savefig('./data/output/loss_accuracy.png')
+    plt.show()
 
 
 def show_image(model, transformer, num_images=25):
@@ -113,6 +131,7 @@ def show_image(model, transformer, num_images=25):
         plt.axis('off')
 
     plt.show()
+    fig.savefig('./data/output/sample_parking_lots.png')
 
 
 def main(args):
