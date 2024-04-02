@@ -1,5 +1,4 @@
 venv/
 .idea/
-/data/
 __pycache__/
-*.model
+/data/datasets/
