@@ -3,6 +3,8 @@ import numpy as np
 import os
 import sys
 
+# TODO: decide what to do with this file
+
 IMAGE_SIZE = 200
 INPUT_FOLDER_PATH = "data/photos/school_dataset/"
 OUTPUT_FOLDER_PATH = "data/output/raw/"

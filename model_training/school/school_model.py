@@ -99,7 +99,7 @@ def train_model(model, train_loader, test_loader, device, num_epochs, learning_r
         plot_test_accuracy.append(test_accuracy)
 
         if test_accuracy > best_accuracy:
-            torch.save(model.state_dict(), 'best_checkpoint.model')
+            torch.save(model.state_dict(), 'data/models/best_checkpoint.model')
             best_accuracy = test_accuracy
 
     # plot loss and accuracy
