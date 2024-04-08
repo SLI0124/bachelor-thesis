@@ -1,0 +1,126 @@
+cuda
+Epoch 1/5
+Batch [100/1324], Train Loss: 0.8669, Train Acc: 0.7330
+Batch [200/1324], Train Loss: 0.4698, Train Acc: 0.8539
+Batch [300/1324], Train Loss: 0.3285, Train Acc: 0.8983
+Batch [400/1324], Train Loss: 0.2582, Train Acc: 0.9198
+Batch [500/1324], Train Loss: 0.2146, Train Acc: 0.9334
+Batch [600/1324], Train Loss: 0.1831, Train Acc: 0.9430
+Batch [700/1324], Train Loss: 0.1602, Train Acc: 0.9500
+Batch [800/1324], Train Loss: 0.1444, Train Acc: 0.9547
+Batch [900/1324], Train Loss: 0.1300, Train Acc: 0.9591
+Batch [1000/1324], Train Loss: 0.1192, Train Acc: 0.9624
+Batch [1100/1324], Train Loss: 0.1102, Train Acc: 0.9653
+Batch [1200/1324], Train Loss: 0.1023, Train Acc: 0.9678
+Batch [1300/1324], Train Loss: 0.0960, Train Acc: 0.9697
+Train Loss: 0.0948, Train Acc: 0.9701
+Test Accuracy: 0.9934
+Confusion Matrix:
+[[11842   124]
+ [   16  9187]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr04_squeezenet_default.pth
+Epoch time: 4.996296056111654.4f minutes and 59.77776336669922.4f seconds
+Epoch 2/5
+Batch [100/1324], Train Loss: 0.0251, Train Acc: 0.9925
+Batch [200/1324], Train Loss: 0.0204, Train Acc: 0.9937
+Batch [300/1324], Train Loss: 0.0238, Train Acc: 0.9929
+Batch [400/1324], Train Loss: 0.0233, Train Acc: 0.9927
+Batch [500/1324], Train Loss: 0.0211, Train Acc: 0.9933
+Batch [600/1324], Train Loss: 0.0195, Train Acc: 0.9937
+Batch [700/1324], Train Loss: 0.0186, Train Acc: 0.9941
+Batch [800/1324], Train Loss: 0.0176, Train Acc: 0.9944
+Batch [900/1324], Train Loss: 0.0172, Train Acc: 0.9946
+Batch [1000/1324], Train Loss: 0.0166, Train Acc: 0.9948
+Batch [1100/1324], Train Loss: 0.0158, Train Acc: 0.9951
+Batch [1200/1324], Train Loss: 0.0150, Train Acc: 0.9953
+Batch [1300/1324], Train Loss: 0.0144, Train Acc: 0.9955
+Train Loss: 0.0144, Train Acc: 0.9955
+Test Accuracy: 0.9969
+Confusion Matrix:
+[[11913    53]
+ [   13  9190]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr04_squeezenet_default.pth
+Epoch time: 9.931344358126323.4f minutes and 55.880661487579346.4f seconds
+Epoch 3/5
+Batch [100/1324], Train Loss: 0.0115, Train Acc: 0.9966
+Batch [200/1324], Train Loss: 0.0074, Train Acc: 0.9978
+Batch [300/1324], Train Loss: 0.0340, Train Acc: 0.9891
+Batch [400/1324], Train Loss: 0.0346, Train Acc: 0.9890
+Batch [500/1324], Train Loss: 0.0305, Train Acc: 0.9905
+Batch [600/1324], Train Loss: 0.0277, Train Acc: 0.9915
+Batch [700/1324], Train Loss: 0.0253, Train Acc: 0.9921
+Batch [800/1324], Train Loss: 0.0238, Train Acc: 0.9926
+Batch [900/1324], Train Loss: 0.0222, Train Acc: 0.9931
+Batch [1000/1324], Train Loss: 0.0208, Train Acc: 0.9936
+Batch [1100/1324], Train Loss: 0.0196, Train Acc: 0.9939
+Batch [1200/1324], Train Loss: 0.0187, Train Acc: 0.9942
+Batch [1300/1324], Train Loss: 0.0181, Train Acc: 0.9944
+Train Loss: 0.0183, Train Acc: 0.9944
+Test Accuracy: 0.9871
+Confusion Matrix:
+[[11699   267]
+ [    6  9197]]
+Epoch time: 13.960308933258057.4f minutes and 57.6185359954834.4f seconds
+Epoch 4/5
+Batch [100/1324], Train Loss: 0.0097, Train Acc: 0.9970
+Batch [200/1324], Train Loss: 0.0075, Train Acc: 0.9974
+Batch [300/1324], Train Loss: 0.0069, Train Acc: 0.9978
+Batch [400/1324], Train Loss: 0.0079, Train Acc: 0.9975
+Batch [500/1324], Train Loss: 0.0075, Train Acc: 0.9977
+Batch [600/1324], Train Loss: 0.0085, Train Acc: 0.9973
+Batch [700/1324], Train Loss: 0.0087, Train Acc: 0.9974
+Batch [800/1324], Train Loss: 0.0086, Train Acc: 0.9974
+Batch [900/1324], Train Loss: 0.0087, Train Acc: 0.9974
+Batch [1000/1324], Train Loss: 0.0088, Train Acc: 0.9973
+Batch [1100/1324], Train Loss: 0.0088, Train Acc: 0.9973
+Batch [1200/1324], Train Loss: 0.0087, Train Acc: 0.9973
+Batch [1300/1324], Train Loss: 0.0089, Train Acc: 0.9973
+Train Loss: 0.0088, Train Acc: 0.9973
+Test Accuracy: 0.9985
+Confusion Matrix:
+[[11961     5]
+ [   26  9177]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr04_squeezenet_default.pth
+Epoch time: 18.53049337863922.4f minutes and 31.82960271835327.4f seconds
+Epoch 5/5
+Batch [100/1324], Train Loss: 0.0085, Train Acc: 0.9970
+Batch [200/1324], Train Loss: 0.0081, Train Acc: 0.9970
+Batch [300/1324], Train Loss: 0.0075, Train Acc: 0.9974
+Batch [400/1324], Train Loss: 0.0146, Train Acc: 0.9956
+Batch [500/1324], Train Loss: 0.0153, Train Acc: 0.9953
+Batch [600/1324], Train Loss: 0.0150, Train Acc: 0.9956
+Batch [700/1324], Train Loss: 0.0135, Train Acc: 0.9961
+Batch [800/1324], Train Loss: 0.0125, Train Acc: 0.9964
+Batch [900/1324], Train Loss: 0.0117, Train Acc: 0.9966
+Batch [1000/1324], Train Loss: 0.0116, Train Acc: 0.9967
+Batch [1100/1324], Train Loss: 0.0114, Train Acc: 0.9967
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source             
+libifcoremd.dll    00007FFED31ADF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF0B302CE3  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF0C5D7344  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF0D9026B1  Unknown               Unknown  Unknown
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source             
+libifcoremd.dll    00007FFED31ADF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF0B302CE3  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF0C5D7344  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF0D9026B1  Unknown               Unknown  Unknown
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source             
+libifcoremd.dll    00007FFED31ADF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF0B302CE3  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF0C5D7344  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF0D9026B1  Unknown               Unknown  Unknown
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source             
+libifcoremd.dll    00007FFED31ADF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF0B302CE3  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF0C5D7344  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF0D9026B1  Unknown               Unknown  Unknown
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source             
+libifcoremd.dll    00007FFED31ADF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FFF0B302CE3  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFF0C5D7344  Unknown               Unknown  Unknown
+ntdll.dll          00007FFF0D9026B1  Unknown               Unknown  Unknown

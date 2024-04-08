@@ -10,7 +10,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch import nn
 from torch import optim
-from datasets_classes.PKLot_Dataset import PKLotDataset
+from datasets_classes import PKLotDataset
 
 
 # TODO: visualize more metrics, like loss, accuracy, confusion matrix, etc. and save them as graphs or something similar
@@ -55,7 +55,7 @@ def test_model(model, dataloader, device):
 
 
 def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, num_epochs, dataset_name,
-                       model_name, eighty_twenty_split=False):
+                       model_name, eighty_twenty_split, model_weights):
     best_acc = 0.0
     epoch_time = time.time()
     for epoch in range(num_epochs):
@@ -69,48 +69,50 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         if train_acc > best_acc:
             best_acc = train_acc
             if eighty_twenty_split:
-                save_path = f'../../data/models/80_20_split/pklot_{dataset_name.lower()}_{model_name}_default.pth'
+                save_path = f'../data/models/80_20_split/pklot_{dataset_name.lower()}_{model_name}_{model_weights}.pth'
             else:
-                save_path = f'../../data/models/pklot_{dataset_name.lower()}_{model_name}_default.pth'
+                save_path = f'../data/models/pklot_{dataset_name.lower()}_{model_name}_{model_weights}.pth'
             if not os.path.exists(os.path.dirname(save_path)):
                 os.makedirs(os.path.dirname(save_path))
             torch.save(model.state_dict(), save_path)
             print(f'Saved the new best model to {save_path}')
 
-        print(f'Epoch time: {(time.time() - epoch_time) / 60} minutes and {(time.time() - epoch_time) % 60} seconds')
+        print(f'Epoch time: {((time.time() - epoch_time) / 60):.4f} minutes '
+              f'and {((time.time() - epoch_time) % 60):.4f} seconds')
+        epoch_time = time.time()
 
     print(f'Best Train Acc: {best_acc:.4f}')
 
 
 def main():
-    # TODO: make some arguments global for better readability
+    # TODO: add some samples of arguments in text file for running the script
+
     # TODO: make some arguments optional or set their default values
 
     parser = argparse.ArgumentParser(description='Train a model on the PKLot dataset.')
 
-    parser.add_argument('--dataset', type=str, help='The dataset to use. Choose between PUC, UFPR04, and UFPR05.')
-    parser.add_argument('--model', type=str, help='The model to use. Choose between alexnet, and TODO.')
+    parser.add_argument('--dataset', type=str,
+                        help='The dataset to use. Choose between PKLot, PKLot-PUC, PKLot-UFPR04, '
+                             'PKLot-UFPR05, and PKLot-All.')
+    parser.add_argument('--model', type=str,
+                        help='The model to use. Choose between alexnet, mobilenet, and squeezenet.')
     parser.add_argument('--epochs', type=int, help='The number of epochs to train the model for.')
     parser.add_argument('--eighty_twenty_split', type=bool,
-                        help='Whether to use an 80/20 split for training and testing.')
-    parser.add_argument('--train_txt', type=str, help='The path to the text file containing the training data.',
-                        default="Empty")
-    parser.add_argument('--test_txt', type=str, help='The path to the text file containing the testing data.',
-                        default="Empty")
+                        help='Whether to use an 80/20 split for training and testing or 50/50 split.')
+    parser.add_argument('--weights', type=str,
+                        help='The weights to use for the model. Choose between DEFAULT and None.')
 
-    # TODO: add options from split text file for different datasets and ADD logic for it
-
-    # TODO: add options and logic for different models
-    # TODO: optional: somehow add weights for different models
+    # TODO: add argument for PKLot or CNRPark dataset
 
     # TODO: optional: add option for different batch sizes
     # TODO: optional: add option for different learning rates
 
-    # TODO: create datasets from CNR and CNR+Ext split for PKLot and add option for parameter
+    # TODO: create datasets from CNR and CNR+Ext split for PKLot and add option for parameter, this will be done using
+    #  eight_twenty_split
     """
     comment: CNR will only have text files for training and testing, so the split will be done in the same way as for
-    the PKLot dataset if the parameter is set to False aka train_txt and test_txt are not empty hence the argument eight_twenty_split
-    will be no longer needed
+    the PKLot dataset if the parameter is set to False aka train_txt and test_txt are not empty hence the argument 
+    eight_twenty_split will be no longer needed
     """
 
     args = parser.parse_args()
@@ -148,24 +150,38 @@ def main():
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    model_argument = args.model
-    if model_argument == 'alexnet':
-        model_alexnet = models.alexnet(weights="DEFAULT")
-        model_alexnet.to(device)
+    model_weights = args.weights
+    if model_weights == 'default':
+        model_weights = 'DEFAULT'
+    elif model_weights == 'none':
+        model_weights = None
     else:
-        raise ValueError('Invalid model. Please choose alexnet, ...')
+        raise ValueError('Invalid weights. Please choose between DEFAULT and None.')
+
+    model_argument = args.model
+
+    if model_argument == 'alexnet':
+        model = models.alexnet(weights=model_weights)
+    elif model_argument == 'mobilenet':
+        model = models.mobilenet_v2(weights=model_weights)
+    elif model_argument == 'squeezenet':
+        model = models.squeezenet1_0(weights=model_weights)
+    else:
+        raise ValueError('Invalid model. Please choose between alexnet, mobilenet, and squeezenet.')
+
+    model.to(device)
+
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     criterion = nn.CrossEntropyLoss()
-
-    optimizer = optim.Adam(model_alexnet.parameters(), lr=0.001)
 
     num_epochs = args.epochs
 
     is_eighty_twenty_split = args.eighty_twenty_split
 
     total_time = time.time()
-    train_and_evaluate(train_puc_dataloader, test_puc_dataloader, model_alexnet, criterion, optimizer, device,
-                       num_epochs, dataset_name, model_argument, is_eighty_twenty_split)
+    train_and_evaluate(train_puc_dataloader, test_puc_dataloader, model, criterion, optimizer, device,
+                       num_epochs, dataset_name, model_argument, is_eighty_twenty_split, model_weights)
     print(
         f'Total training time: {(time.time() - total_time) / 60} minutes and {(time.time() - total_time) % 60} seconds')
 

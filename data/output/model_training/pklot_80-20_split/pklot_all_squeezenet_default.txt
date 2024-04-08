@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\vojte\PycharmProjects\bachelor-thesis\model_training\model_training.py", line 191, in <module>
+    main()
+  File "C:\Users\vojte\PycharmProjects\bachelor-thesis\model_training\model_training.py", line 151, in main
+    model_weights = args.weights.toLowerCase()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'toLowerCase'
