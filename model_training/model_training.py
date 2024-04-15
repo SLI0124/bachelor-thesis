@@ -55,7 +55,7 @@ def test_model(model, dataloader, device):
 
 
 def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, num_epochs, dataset_name,
-                       model_name, eighty_twenty_split, model_weights):
+                       model_name, eighty_twenty_split):
     best_acc = 0.0
     epoch_time = time.time()
     for epoch in range(num_epochs):
@@ -69,9 +69,9 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         if train_acc > best_acc:
             best_acc = train_acc
             if eighty_twenty_split:
-                save_path = f'../data/models/80_20_split/pklot_{dataset_name.lower()}_{model_name}_{model_weights}.pth'
+                save_path = f'../data/models/80_20_split/pklot_{dataset_name.lower()}_{model_name}.pth'
             else:
-                save_path = f'../data/models/pklot_{dataset_name.lower()}_{model_name}_{model_weights}.pth'
+                save_path = f'../data/models/pklot_{dataset_name.lower()}_{model_name}.pth'
             if not os.path.exists(os.path.dirname(save_path)):
                 os.makedirs(os.path.dirname(save_path))
             torch.save(model.state_dict(), save_path)
@@ -99,8 +99,6 @@ def main():
     parser.add_argument('--epochs', type=int, help='The number of epochs to train the model for.')
     parser.add_argument('--eighty_twenty_split', type=bool,
                         help='Whether to use an 80/20 split for training and testing or 50/50 split.')
-    parser.add_argument('--weights', type=str,
-                        help='The weights to use for the model. Choose between DEFAULT and None.')
 
     # TODO: add argument for PKLot or CNRPark dataset
 
@@ -150,22 +148,14 @@ def main():
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    model_weights = args.weights
-    if model_weights == 'default':
-        model_weights = 'DEFAULT'
-    elif model_weights == 'none':
-        model_weights = None
-    else:
-        raise ValueError('Invalid weights. Please choose between DEFAULT and None.')
-
     model_argument = args.model
 
     if model_argument == 'alexnet':
-        model = models.alexnet(weights=model_weights)
+        model = models.alexnet(weights=None)
     elif model_argument == 'mobilenet':
-        model = models.mobilenet_v2(weights=model_weights)
+        model = models.mobilenet_v2(weights=None)
     elif model_argument == 'squeezenet':
-        model = models.squeezenet1_0(weights=model_weights)
+        model = models.squeezenet1_0(weights=None)
     else:
         raise ValueError('Invalid model. Please choose between alexnet, mobilenet, and squeezenet.')
 
@@ -181,7 +171,7 @@ def main():
 
     total_time = time.time()
     train_and_evaluate(train_puc_dataloader, test_puc_dataloader, model, criterion, optimizer, device,
-                       num_epochs, dataset_name, model_argument, is_eighty_twenty_split, model_weights)
+                       num_epochs, dataset_name, model_argument, is_eighty_twenty_split)
     print(
         f'Total training time: {(time.time() - total_time) / 60} minutes and {(time.time() - total_time) % 60} seconds')
 
