@@ -85,7 +85,7 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
 
 
 def main():
-    # TODO: add some samples of arguments in text file for running the script
+    # TODO: update README.md for running the script
 
     # TODO: make some arguments optional or set their default values
 

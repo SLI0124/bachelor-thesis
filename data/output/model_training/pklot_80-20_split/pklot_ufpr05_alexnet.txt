@@ -1,0 +1,142 @@
+Epoch 1/5
+Batch [100/2073], Train Loss: 0.8770, Train Acc: 0.6050
+Batch [200/2073], Train Loss: 0.4863, Train Acc: 0.7863
+Batch [300/2073], Train Loss: 0.3495, Train Acc: 0.8496
+Batch [400/2073], Train Loss: 0.2774, Train Acc: 0.8830
+Batch [500/2073], Train Loss: 0.2336, Train Acc: 0.9026
+Batch [600/2073], Train Loss: 0.2070, Train Acc: 0.9150
+Batch [700/2073], Train Loss: 0.1856, Train Acc: 0.9246
+Batch [800/2073], Train Loss: 0.1673, Train Acc: 0.9326
+Batch [900/2073], Train Loss: 0.1532, Train Acc: 0.9386
+Batch [1000/2073], Train Loss: 0.1419, Train Acc: 0.9435
+Batch [1100/2073], Train Loss: 0.1329, Train Acc: 0.9476
+Batch [1200/2073], Train Loss: 0.1251, Train Acc: 0.9510
+Batch [1300/2073], Train Loss: 0.1177, Train Acc: 0.9541
+Batch [1400/2073], Train Loss: 0.1120, Train Acc: 0.9565
+Batch [1500/2073], Train Loss: 0.1069, Train Acc: 0.9588
+Batch [1600/2073], Train Loss: 0.1023, Train Acc: 0.9608
+Batch [1700/2073], Train Loss: 0.0979, Train Acc: 0.9627
+Batch [1800/2073], Train Loss: 0.0947, Train Acc: 0.9641
+Batch [1900/2073], Train Loss: 0.0914, Train Acc: 0.9655
+Batch [2000/2073], Train Loss: 0.0880, Train Acc: 0.9668
+Train Loss: 0.0858, Train Acc: 0.9677
+Test Accuracy: 0.9932
+Confusion Matrix:
+[[13614    78]
+ [  148 19317]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr05_alexnet.pth
+Epoch time: 4.0973 minutes and 5.8406 seconds
+Epoch 2/5
+Batch [100/2073], Train Loss: 0.0235, Train Acc: 0.9925
+Batch [200/2073], Train Loss: 0.0221, Train Acc: 0.9932
+Batch [300/2073], Train Loss: 0.0310, Train Acc: 0.9911
+Batch [400/2073], Train Loss: 0.0323, Train Acc: 0.9909
+Batch [500/2073], Train Loss: 0.0293, Train Acc: 0.9915
+Batch [600/2073], Train Loss: 0.0302, Train Acc: 0.9916
+Batch [700/2073], Train Loss: 0.0292, Train Acc: 0.9917
+Batch [800/2073], Train Loss: 0.0281, Train Acc: 0.9921
+Batch [900/2073], Train Loss: 0.0268, Train Acc: 0.9925
+Batch [1000/2073], Train Loss: 0.0264, Train Acc: 0.9927
+Batch [1100/2073], Train Loss: 0.0253, Train Acc: 0.9930
+Batch [1200/2073], Train Loss: 0.0254, Train Acc: 0.9930
+Batch [1300/2073], Train Loss: 0.0247, Train Acc: 0.9932
+Batch [1400/2073], Train Loss: 0.0244, Train Acc: 0.9934
+Batch [1500/2073], Train Loss: 0.0248, Train Acc: 0.9933
+Batch [1600/2073], Train Loss: 0.0245, Train Acc: 0.9934
+Batch [1700/2073], Train Loss: 0.0247, Train Acc: 0.9935
+Batch [1800/2073], Train Loss: 0.0251, Train Acc: 0.9934
+Batch [1900/2073], Train Loss: 0.0247, Train Acc: 0.9935
+Batch [2000/2073], Train Loss: 0.0243, Train Acc: 0.9936
+Train Loss: 0.0272, Train Acc: 0.9931
+Test Accuracy: 0.8750
+Confusion Matrix:
+[[13686     6]
+ [ 4140 15325]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr05_alexnet.pth
+Epoch time: 3.3503 minutes and 21.0162 seconds
+Epoch 3/5
+Batch [100/2073], Train Loss: 0.0439, Train Acc: 0.9878
+Batch [200/2073], Train Loss: 0.0326, Train Acc: 0.9915
+Batch [300/2073], Train Loss: 0.0261, Train Acc: 0.9928
+Batch [400/2073], Train Loss: 0.0242, Train Acc: 0.9934
+Batch [500/2073], Train Loss: 0.0226, Train Acc: 0.9941
+Batch [600/2073], Train Loss: 0.0212, Train Acc: 0.9944
+Batch [700/2073], Train Loss: 0.0203, Train Acc: 0.9947
+Batch [800/2073], Train Loss: 0.0199, Train Acc: 0.9947
+Batch [900/2073], Train Loss: 0.0187, Train Acc: 0.9949
+Batch [1000/2073], Train Loss: 0.0192, Train Acc: 0.9950
+Batch [1100/2073], Train Loss: 0.0202, Train Acc: 0.9949
+Batch [1200/2073], Train Loss: 0.0196, Train Acc: 0.9950
+Batch [1300/2073], Train Loss: 0.0194, Train Acc: 0.9950
+Batch [1400/2073], Train Loss: 0.0187, Train Acc: 0.9952
+Batch [1500/2073], Train Loss: 0.0183, Train Acc: 0.9953
+Batch [1600/2073], Train Loss: 0.0178, Train Acc: 0.9954
+Batch [1700/2073], Train Loss: 0.0174, Train Acc: 0.9955
+Batch [1800/2073], Train Loss: 0.0170, Train Acc: 0.9956
+Batch [1900/2073], Train Loss: 0.0168, Train Acc: 0.9956
+Batch [2000/2073], Train Loss: 0.0164, Train Acc: 0.9957
+Train Loss: 0.0162, Train Acc: 0.9958
+Test Accuracy: 0.9978
+Confusion Matrix:
+[[13653    39]
+ [   34 19431]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr05_alexnet.pth
+Epoch time: 2.4691 minutes and 28.1449 seconds
+Epoch 4/5
+Batch [100/2073], Train Loss: 0.0150, Train Acc: 0.9962
+Batch [200/2073], Train Loss: 0.0157, Train Acc: 0.9959
+Batch [300/2073], Train Loss: 0.0155, Train Acc: 0.9960
+Batch [400/2073], Train Loss: 0.0156, Train Acc: 0.9958
+Batch [500/2073], Train Loss: 0.0150, Train Acc: 0.9960
+Batch [600/2073], Train Loss: 0.0145, Train Acc: 0.9961
+Batch [700/2073], Train Loss: 0.0150, Train Acc: 0.9961
+Batch [800/2073], Train Loss: 0.0144, Train Acc: 0.9963
+Batch [900/2073], Train Loss: 0.0138, Train Acc: 0.9964
+Batch [1000/2073], Train Loss: 0.0136, Train Acc: 0.9965
+Batch [1100/2073], Train Loss: 0.0135, Train Acc: 0.9966
+Batch [1200/2073], Train Loss: 0.0137, Train Acc: 0.9966
+Batch [1300/2073], Train Loss: 0.0136, Train Acc: 0.9966
+Batch [1400/2073], Train Loss: 0.0136, Train Acc: 0.9966
+Batch [1500/2073], Train Loss: 0.0137, Train Acc: 0.9966
+Batch [1600/2073], Train Loss: 0.0138, Train Acc: 0.9967
+Batch [1700/2073], Train Loss: 0.0135, Train Acc: 0.9967
+Batch [1800/2073], Train Loss: 0.0132, Train Acc: 0.9968
+Batch [1900/2073], Train Loss: 0.0134, Train Acc: 0.9967
+Batch [2000/2073], Train Loss: 0.0133, Train Acc: 0.9967
+Train Loss: 0.0136, Train Acc: 0.9967
+Test Accuracy: 0.9967
+Confusion Matrix:
+[[13611    81]
+ [   29 19436]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr05_alexnet.pth
+Epoch time: 2.4019 minutes and 24.1111 seconds
+Epoch 5/5
+Batch [100/2073], Train Loss: 0.0098, Train Acc: 0.9969
+Batch [200/2073], Train Loss: 0.0141, Train Acc: 0.9963
+Batch [300/2073], Train Loss: 0.0130, Train Acc: 0.9965
+Batch [400/2073], Train Loss: 0.0142, Train Acc: 0.9965
+Batch [500/2073], Train Loss: 0.0153, Train Acc: 0.9964
+Batch [600/2073], Train Loss: 0.0165, Train Acc: 0.9962
+Batch [700/2073], Train Loss: 0.0162, Train Acc: 0.9962
+Batch [800/2073], Train Loss: 0.0158, Train Acc: 0.9962
+Batch [900/2073], Train Loss: 0.0154, Train Acc: 0.9962
+Batch [1000/2073], Train Loss: 0.0146, Train Acc: 0.9964
+Batch [1100/2073], Train Loss: 0.0142, Train Acc: 0.9965
+Batch [1200/2073], Train Loss: 0.0142, Train Acc: 0.9966
+Batch [1300/2073], Train Loss: 0.0139, Train Acc: 0.9966
+Batch [1400/2073], Train Loss: 0.0139, Train Acc: 0.9966
+Batch [1500/2073], Train Loss: 0.0134, Train Acc: 0.9967
+Batch [1600/2073], Train Loss: 0.0132, Train Acc: 0.9967
+Batch [1700/2073], Train Loss: 0.0132, Train Acc: 0.9968
+Batch [1800/2073], Train Loss: 0.0129, Train Acc: 0.9968
+Batch [1900/2073], Train Loss: 0.0129, Train Acc: 0.9967
+Batch [2000/2073], Train Loss: 0.0131, Train Acc: 0.9967
+Train Loss: 0.0127, Train Acc: 0.9967
+Test Accuracy: 0.9982
+Confusion Matrix:
+[[13656    36]
+ [   24 19441]]
+Saved the new best model to ../data/models/80_20_split/pklot_ufpr05_alexnet.pth
+Epoch time: 2.3612 minutes and 21.6744 seconds
+Best Train Acc: 0.9967
+Total training time: 14.679787945747375 minutes and 40.78727674484253 seconds

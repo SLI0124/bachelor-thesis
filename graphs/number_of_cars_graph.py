@@ -1,32 +1,33 @@
 import matplotlib.pyplot as plt
 
 # Data
-years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
-population = [4496232, 4581642, 4706325, 4729185, 4833386, 5115316, 5277619, 5435273, 5584743, 5735796, 5882916,
-              6024463, 6162433, 6296786]
+# https://www.cappo.cz/cisla-a-fakta/stav-vozoveho-parku-v-cr
+# https://portal.sda-cia.cz/clanek.php?id=243
+years = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
+# population = [5_368_661, 5_592_738, 5_802_521, 5_989_538, 6_129_874, 6_293_125, 6_425_417]
+population_cz = [5.368, 5.592, 5.802, 5.989, 6.129, 6.293, 6.425]
 
 
 def main():
-    # Plotting
-    plt.figure(figsize=(16, 8))
-    plt.bar(years, population, color='skyblue')
+    plt.figure(figsize=(16, 12))
+    plt.bar(years, population_cz, color='skyblue')
 
     # Labeling
-    plt.xlabel('Rok', fontsize=20)
-    plt.ylabel('Počet osobních vozidel [v miliónech] ', fontsize=20)
-    plt.title('Počet osobních vozidel v České Republice', fontsize=20)
+    plt.xlabel('Rok', fontsize=28)
+    plt.ylabel('Počet osobních vozidel [v miliónech] ', fontsize=24)
+    plt.title('Počet osobních vozidel v České Republice', fontsize=28)
 
-    # Adjust ticks fontsize
-    plt.xticks(fontsize=16)
-    plt.yticks(fontsize=16)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
 
-    # Annotating each bar with its value
-    for i, txt in enumerate(population):
-        plt.annotate(txt, (years[i], population[i]),
+    plt.ylim(5, 6.5)
+
+    for i, txt in enumerate(population_cz):
+        plt.annotate(txt, (years[i], population_cz[i]),
                      textcoords="offset points",
                      xytext=(0, 10),
                      ha='center',
-                     fontsize=12)  # Adjusted fontsize
+                     fontsize=24)
 
     # Save figure
     plt.savefig("../data/graphs/pocet_vozidel_v_cr.png")

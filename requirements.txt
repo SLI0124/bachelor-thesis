@@ -6,3 +6,4 @@ opencv-python
 pandas
 pillow
 scikit-learn
+torchsummary # testing, not final

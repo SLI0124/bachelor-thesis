@@ -1,0 +1,306 @@
+Epoch 1/5
+Batch [100/5303], Train Loss: 0.7919, Train Acc: 0.7450
+Batch [200/5303], Train Loss: 0.4179, Train Acc: 0.8659
+Batch [300/5303], Train Loss: 0.2931, Train Acc: 0.9066
+Batch [400/5303], Train Loss: 0.2281, Train Acc: 0.9275
+Batch [500/5303], Train Loss: 0.1893, Train Acc: 0.9404
+Batch [600/5303], Train Loss: 0.1633, Train Acc: 0.9491
+Batch [700/5303], Train Loss: 0.1440, Train Acc: 0.9554
+Batch [800/5303], Train Loss: 0.1325, Train Acc: 0.9589
+Batch [900/5303], Train Loss: 0.1437, Train Acc: 0.9550
+Batch [1000/5303], Train Loss: 0.1330, Train Acc: 0.9587
+Batch [1100/5303], Train Loss: 0.1228, Train Acc: 0.9620
+Batch [1200/5303], Train Loss: 0.1152, Train Acc: 0.9647
+Batch [1300/5303], Train Loss: 0.1081, Train Acc: 0.9670
+Batch [1400/5303], Train Loss: 0.1016, Train Acc: 0.9690
+Batch [1500/5303], Train Loss: 0.0969, Train Acc: 0.9706
+Batch [1600/5303], Train Loss: 0.0919, Train Acc: 0.9722
+Batch [1700/5303], Train Loss: 0.0876, Train Acc: 0.9736
+Batch [1800/5303], Train Loss: 0.0838, Train Acc: 0.9748
+Batch [1900/5303], Train Loss: 0.0805, Train Acc: 0.9759
+Batch [2000/5303], Train Loss: 0.0774, Train Acc: 0.9769
+Batch [2100/5303], Train Loss: 0.0742, Train Acc: 0.9779
+Batch [2200/5303], Train Loss: 0.0718, Train Acc: 0.9787
+Batch [2300/5303], Train Loss: 0.0693, Train Acc: 0.9795
+Batch [2400/5303], Train Loss: 0.0673, Train Acc: 0.9802
+Batch [2500/5303], Train Loss: 0.0650, Train Acc: 0.9808
+Batch [2600/5303], Train Loss: 0.0629, Train Acc: 0.9815
+Batch [2700/5303], Train Loss: 0.0613, Train Acc: 0.9821
+Batch [2800/5303], Train Loss: 0.0598, Train Acc: 0.9825
+Batch [2900/5303], Train Loss: 0.0585, Train Acc: 0.9830
+Batch [3000/5303], Train Loss: 0.0573, Train Acc: 0.9833
+Batch [3100/5303], Train Loss: 0.0561, Train Acc: 0.9838
+Batch [3200/5303], Train Loss: 0.0548, Train Acc: 0.9841
+Batch [3300/5303], Train Loss: 0.0536, Train Acc: 0.9845
+Batch [3400/5303], Train Loss: 0.0525, Train Acc: 0.9849
+Batch [3500/5303], Train Loss: 0.0515, Train Acc: 0.9852
+Batch [3600/5303], Train Loss: 0.0504, Train Acc: 0.9855
+Batch [3700/5303], Train Loss: 0.0494, Train Acc: 0.9858
+Batch [3800/5303], Train Loss: 0.0484, Train Acc: 0.9862
+Batch [3900/5303], Train Loss: 0.0476, Train Acc: 0.9865
+Batch [4000/5303], Train Loss: 0.0467, Train Acc: 0.9867
+Batch [4100/5303], Train Loss: 0.0460, Train Acc: 0.9869
+Batch [4200/5303], Train Loss: 0.0452, Train Acc: 0.9872
+Batch [4300/5303], Train Loss: 0.0445, Train Acc: 0.9874
+Batch [4400/5303], Train Loss: 0.0437, Train Acc: 0.9876
+Batch [4500/5303], Train Loss: 0.0430, Train Acc: 0.9878
+Batch [4600/5303], Train Loss: 0.0423, Train Acc: 0.9880
+Batch [4700/5303], Train Loss: 0.0417, Train Acc: 0.9882
+Batch [4800/5303], Train Loss: 0.0412, Train Acc: 0.9884
+Batch [4900/5303], Train Loss: 0.0406, Train Acc: 0.9886
+Batch [5000/5303], Train Loss: 0.0399, Train Acc: 0.9888
+Batch [5100/5303], Train Loss: 0.0393, Train Acc: 0.9890
+Batch [5200/5303], Train Loss: 0.0389, Train Acc: 0.9891
+Batch [5300/5303], Train Loss: 0.0384, Train Acc: 0.9893
+Train Loss: 0.0384, Train Acc: 0.9893
+Test Accuracy: 0.9983
+Confusion Matrix:
+[[45923    60]
+ [   86 38776]]
+Saved the new best model to ../data/models/80_20_split/pklot_puc_alexnet.pth
+Epoch time: 7.9598 minutes and 57.5856 seconds
+Epoch 2/5
+Batch [100/5303], Train Loss: 0.0144, Train Acc: 0.9972
+Batch [200/5303], Train Loss: 0.0140, Train Acc: 0.9973
+Batch [300/5303], Train Loss: 0.0135, Train Acc: 0.9976
+Batch [400/5303], Train Loss: 0.0134, Train Acc: 0.9977
+Batch [500/5303], Train Loss: 0.0138, Train Acc: 0.9975
+Batch [600/5303], Train Loss: 0.0138, Train Acc: 0.9974
+Batch [700/5303], Train Loss: 0.0153, Train Acc: 0.9969
+Batch [800/5303], Train Loss: 0.0167, Train Acc: 0.9966
+Batch [900/5303], Train Loss: 0.0174, Train Acc: 0.9966
+Batch [1000/5303], Train Loss: 0.0173, Train Acc: 0.9966
+Batch [1100/5303], Train Loss: 0.0167, Train Acc: 0.9966
+Batch [1200/5303], Train Loss: 0.0161, Train Acc: 0.9967
+Batch [1300/5303], Train Loss: 0.0159, Train Acc: 0.9967
+Batch [1400/5303], Train Loss: 0.0158, Train Acc: 0.9968
+Batch [1500/5303], Train Loss: 0.0153, Train Acc: 0.9969
+Batch [1600/5303], Train Loss: 0.0152, Train Acc: 0.9969
+Batch [1700/5303], Train Loss: 0.0151, Train Acc: 0.9969
+Batch [1800/5303], Train Loss: 0.0146, Train Acc: 0.9970
+Batch [1900/5303], Train Loss: 0.0143, Train Acc: 0.9970
+Batch [2000/5303], Train Loss: 0.0202, Train Acc: 0.9946
+Batch [2100/5303], Train Loss: 0.0211, Train Acc: 0.9944
+Batch [2200/5303], Train Loss: 0.0210, Train Acc: 0.9945
+Batch [2300/5303], Train Loss: 0.0204, Train Acc: 0.9946
+Batch [2400/5303], Train Loss: 0.0199, Train Acc: 0.9948
+Batch [2500/5303], Train Loss: 0.0197, Train Acc: 0.9949
+Batch [2600/5303], Train Loss: 0.0193, Train Acc: 0.9950
+Batch [2700/5303], Train Loss: 0.0190, Train Acc: 0.9951
+Batch [2800/5303], Train Loss: 0.0187, Train Acc: 0.9952
+Batch [2900/5303], Train Loss: 0.0189, Train Acc: 0.9952
+Batch [3000/5303], Train Loss: 0.0186, Train Acc: 0.9953
+Batch [3100/5303], Train Loss: 0.0187, Train Acc: 0.9953
+Batch [3200/5303], Train Loss: 0.0188, Train Acc: 0.9953
+Batch [3300/5303], Train Loss: 0.0189, Train Acc: 0.9954
+Batch [3400/5303], Train Loss: 0.0187, Train Acc: 0.9955
+Batch [3500/5303], Train Loss: 0.0186, Train Acc: 0.9955
+Batch [3600/5303], Train Loss: 0.0184, Train Acc: 0.9955
+Batch [3700/5303], Train Loss: 0.0187, Train Acc: 0.9955
+Batch [3800/5303], Train Loss: 0.0188, Train Acc: 0.9955
+Batch [3900/5303], Train Loss: 0.0189, Train Acc: 0.9955
+Batch [4000/5303], Train Loss: 0.0189, Train Acc: 0.9956
+Batch [4100/5303], Train Loss: 0.0187, Train Acc: 0.9956
+Batch [4200/5303], Train Loss: 0.0186, Train Acc: 0.9956
+Batch [4300/5303], Train Loss: 0.0186, Train Acc: 0.9957
+Batch [4400/5303], Train Loss: 0.0185, Train Acc: 0.9957
+Batch [4500/5303], Train Loss: 0.0184, Train Acc: 0.9957
+Batch [4600/5303], Train Loss: 0.0184, Train Acc: 0.9958
+Batch [4700/5303], Train Loss: 0.0183, Train Acc: 0.9958
+Batch [4800/5303], Train Loss: 0.0182, Train Acc: 0.9958
+Batch [4900/5303], Train Loss: 0.0180, Train Acc: 0.9959
+Batch [5000/5303], Train Loss: 0.0181, Train Acc: 0.9959
+Batch [5100/5303], Train Loss: 0.0181, Train Acc: 0.9959
+Batch [5200/5303], Train Loss: 0.0181, Train Acc: 0.9959
+Batch [5300/5303], Train Loss: 0.0181, Train Acc: 0.9959
+Train Loss: 0.0181, Train Acc: 0.9959
+Test Accuracy: 0.9981
+Confusion Matrix:
+[[45919    64]
+ [   98 38764]]
+Saved the new best model to ../data/models/80_20_split/pklot_puc_alexnet.pth
+Epoch time: 5.4793 minutes and 28.7574 seconds
+Epoch 3/5
+Batch [100/5303], Train Loss: 0.0181, Train Acc: 0.9967
+Batch [200/5303], Train Loss: 0.0407, Train Acc: 0.9888
+Batch [300/5303], Train Loss: 0.0304, Train Acc: 0.9918
+Batch [400/5303], Train Loss: 0.0245, Train Acc: 0.9935
+Batch [500/5303], Train Loss: 0.0230, Train Acc: 0.9943
+Batch [600/5303], Train Loss: 0.0214, Train Acc: 0.9948
+Batch [700/5303], Train Loss: 0.0205, Train Acc: 0.9952
+Batch [800/5303], Train Loss: 0.0199, Train Acc: 0.9954
+Batch [900/5303], Train Loss: 0.0189, Train Acc: 0.9956
+Batch [1000/5303], Train Loss: 0.0188, Train Acc: 0.9958
+Batch [1100/5303], Train Loss: 0.0176, Train Acc: 0.9960
+Batch [1200/5303], Train Loss: 0.0173, Train Acc: 0.9962
+Batch [1300/5303], Train Loss: 0.0169, Train Acc: 0.9963
+Batch [1400/5303], Train Loss: 0.0166, Train Acc: 0.9964
+Batch [1500/5303], Train Loss: 0.0174, Train Acc: 0.9962
+Batch [1600/5303], Train Loss: 0.0178, Train Acc: 0.9962
+Batch [1700/5303], Train Loss: 0.0177, Train Acc: 0.9962
+Batch [1800/5303], Train Loss: 0.0171, Train Acc: 0.9962
+Batch [1900/5303], Train Loss: 0.0169, Train Acc: 0.9963
+Batch [2000/5303], Train Loss: 0.0169, Train Acc: 0.9964
+Batch [2100/5303], Train Loss: 0.0167, Train Acc: 0.9965
+Batch [2200/5303], Train Loss: 0.0163, Train Acc: 0.9966
+Batch [2300/5303], Train Loss: 0.0161, Train Acc: 0.9966
+Batch [2400/5303], Train Loss: 0.0159, Train Acc: 0.9967
+Batch [2500/5303], Train Loss: 0.0172, Train Acc: 0.9964
+Batch [2600/5303], Train Loss: 0.0177, Train Acc: 0.9963
+Batch [2700/5303], Train Loss: 0.0180, Train Acc: 0.9963
+Batch [2800/5303], Train Loss: 0.0185, Train Acc: 0.9963
+Batch [2900/5303], Train Loss: 0.0185, Train Acc: 0.9963
+Batch [3000/5303], Train Loss: 0.0182, Train Acc: 0.9964
+Batch [3100/5303], Train Loss: 0.0181, Train Acc: 0.9964
+Batch [3200/5303], Train Loss: 0.0179, Train Acc: 0.9965
+Batch [3300/5303], Train Loss: 0.0180, Train Acc: 0.9965
+Batch [3400/5303], Train Loss: 0.0180, Train Acc: 0.9965
+Batch [3500/5303], Train Loss: 0.0179, Train Acc: 0.9965
+Batch [3600/5303], Train Loss: 0.0179, Train Acc: 0.9965
+Batch [3700/5303], Train Loss: 0.0178, Train Acc: 0.9966
+Batch [3800/5303], Train Loss: 0.0177, Train Acc: 0.9966
+Batch [3900/5303], Train Loss: 0.0180, Train Acc: 0.9966
+Batch [4000/5303], Train Loss: 0.0179, Train Acc: 0.9966
+Batch [4100/5303], Train Loss: 0.0178, Train Acc: 0.9966
+Batch [4200/5303], Train Loss: 0.0176, Train Acc: 0.9966
+Batch [4300/5303], Train Loss: 0.0174, Train Acc: 0.9966
+Batch [4400/5303], Train Loss: 0.0172, Train Acc: 0.9967
+Batch [4500/5303], Train Loss: 0.0171, Train Acc: 0.9967
+Batch [4600/5303], Train Loss: 0.0171, Train Acc: 0.9967
+Batch [4700/5303], Train Loss: 0.0171, Train Acc: 0.9967
+Batch [4800/5303], Train Loss: 0.0170, Train Acc: 0.9967
+Batch [4900/5303], Train Loss: 0.0168, Train Acc: 0.9967
+Batch [5000/5303], Train Loss: 0.0167, Train Acc: 0.9968
+Batch [5100/5303], Train Loss: 0.0166, Train Acc: 0.9968
+Batch [5200/5303], Train Loss: 0.0165, Train Acc: 0.9968
+Batch [5300/5303], Train Loss: 0.0165, Train Acc: 0.9968
+Train Loss: 0.0164, Train Acc: 0.9968
+Test Accuracy: 0.9985
+Confusion Matrix:
+[[45913    70]
+ [   56 38806]]
+Saved the new best model to ../data/models/80_20_split/pklot_puc_alexnet.pth
+Epoch time: 5.4461 minutes and 26.7655 seconds
+Epoch 4/5
+Batch [100/5303], Train Loss: 0.0161, Train Acc: 0.9972
+Batch [200/5303], Train Loss: 0.0157, Train Acc: 0.9974
+Batch [300/5303], Train Loss: 0.0161, Train Acc: 0.9971
+Batch [400/5303], Train Loss: 0.0149, Train Acc: 0.9973
+Batch [500/5303], Train Loss: 0.0153, Train Acc: 0.9970
+Batch [600/5303], Train Loss: 0.0152, Train Acc: 0.9970
+Batch [700/5303], Train Loss: 0.0158, Train Acc: 0.9970
+Batch [800/5303], Train Loss: 0.0157, Train Acc: 0.9969
+Batch [900/5303], Train Loss: 0.0153, Train Acc: 0.9970
+Batch [1000/5303], Train Loss: 0.0150, Train Acc: 0.9970
+Batch [1100/5303], Train Loss: 0.0144, Train Acc: 0.9971
+Batch [1200/5303], Train Loss: 0.0142, Train Acc: 0.9971
+Batch [1300/5303], Train Loss: 0.0140, Train Acc: 0.9972
+Batch [1400/5303], Train Loss: 0.0146, Train Acc: 0.9972
+Batch [1500/5303], Train Loss: 0.0142, Train Acc: 0.9973
+Batch [1600/5303], Train Loss: 0.0142, Train Acc: 0.9973
+Batch [1700/5303], Train Loss: 0.0140, Train Acc: 0.9973
+Batch [1800/5303], Train Loss: 0.0138, Train Acc: 0.9973
+Batch [1900/5303], Train Loss: 0.0137, Train Acc: 0.9974
+Batch [2000/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2100/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2200/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2300/5303], Train Loss: 0.0135, Train Acc: 0.9974
+Batch [2400/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2500/5303], Train Loss: 0.0135, Train Acc: 0.9974
+Batch [2600/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2700/5303], Train Loss: 0.0135, Train Acc: 0.9974
+Batch [2800/5303], Train Loss: 0.0136, Train Acc: 0.9974
+Batch [2900/5303], Train Loss: 0.0136, Train Acc: 0.9975
+Batch [3000/5303], Train Loss: 0.0136, Train Acc: 0.9975
+Batch [3100/5303], Train Loss: 0.0137, Train Acc: 0.9975
+Batch [3200/5303], Train Loss: 0.0135, Train Acc: 0.9975
+Batch [3300/5303], Train Loss: 0.0134, Train Acc: 0.9975
+Batch [3400/5303], Train Loss: 0.0135, Train Acc: 0.9975
+Batch [3500/5303], Train Loss: 0.0132, Train Acc: 0.9975
+Batch [3600/5303], Train Loss: 0.0132, Train Acc: 0.9975
+Batch [3700/5303], Train Loss: 0.0132, Train Acc: 0.9976
+Batch [3800/5303], Train Loss: 0.0134, Train Acc: 0.9976
+Batch [3900/5303], Train Loss: 0.0135, Train Acc: 0.9975
+Batch [4000/5303], Train Loss: 0.0134, Train Acc: 0.9975
+Batch [4100/5303], Train Loss: 0.0134, Train Acc: 0.9975
+Batch [4200/5303], Train Loss: 0.0133, Train Acc: 0.9975
+Batch [4300/5303], Train Loss: 0.0133, Train Acc: 0.9975
+Batch [4400/5303], Train Loss: 0.0134, Train Acc: 0.9975
+Batch [4500/5303], Train Loss: 0.0133, Train Acc: 0.9975
+Batch [4600/5303], Train Loss: 0.0133, Train Acc: 0.9975
+Batch [4700/5303], Train Loss: 0.0133, Train Acc: 0.9975
+Batch [4800/5303], Train Loss: 0.0135, Train Acc: 0.9975
+Batch [4900/5303], Train Loss: 0.0140, Train Acc: 0.9974
+Batch [5000/5303], Train Loss: 0.0140, Train Acc: 0.9974
+Batch [5100/5303], Train Loss: 0.0141, Train Acc: 0.9974
+Batch [5200/5303], Train Loss: 0.0141, Train Acc: 0.9974
+Batch [5300/5303], Train Loss: 0.0143, Train Acc: 0.9973
+Train Loss: 0.0143, Train Acc: 0.9973
+Test Accuracy: 0.9982
+Confusion Matrix:
+[[45929    54]
+ [   98 38764]]
+Saved the new best model to ../data/models/80_20_split/pklot_puc_alexnet.pth
+Epoch time: 5.4633 minutes and 27.7987 seconds
+Epoch 5/5
+Batch [100/5303], Train Loss: 0.0720, Train Acc: 0.9858
+Batch [200/5303], Train Loss: 0.0560, Train Acc: 0.9902
+Batch [300/5303], Train Loss: 0.0449, Train Acc: 0.9923
+Batch [400/5303], Train Loss: 0.0407, Train Acc: 0.9930
+Batch [500/5303], Train Loss: 0.0363, Train Acc: 0.9938
+Batch [600/5303], Train Loss: 0.0327, Train Acc: 0.9944
+Batch [700/5303], Train Loss: 0.0297, Train Acc: 0.9949
+Batch [800/5303], Train Loss: 0.0276, Train Acc: 0.9952
+Batch [900/5303], Train Loss: 0.0258, Train Acc: 0.9955
+Batch [1000/5303], Train Loss: 0.0243, Train Acc: 0.9957
+Batch [1100/5303], Train Loss: 0.0238, Train Acc: 0.9959
+Batch [1200/5303], Train Loss: 0.0228, Train Acc: 0.9961
+Batch [1300/5303], Train Loss: 0.0225, Train Acc: 0.9962
+Batch [1400/5303], Train Loss: 0.0216, Train Acc: 0.9963
+Batch [1500/5303], Train Loss: 0.0214, Train Acc: 0.9963
+Batch [1600/5303], Train Loss: 0.0207, Train Acc: 0.9964
+Batch [1700/5303], Train Loss: 0.0196, Train Acc: 0.9966
+Batch [1800/5303], Train Loss: 0.0190, Train Acc: 0.9967
+Batch [1900/5303], Train Loss: 0.0186, Train Acc: 0.9968
+Batch [2000/5303], Train Loss: 0.0179, Train Acc: 0.9969
+Batch [2100/5303], Train Loss: 0.0183, Train Acc: 0.9968
+Batch [2200/5303], Train Loss: 0.0184, Train Acc: 0.9968
+Batch [2300/5303], Train Loss: 0.0182, Train Acc: 0.9969
+Batch [2400/5303], Train Loss: 0.0179, Train Acc: 0.9969
+Batch [2500/5303], Train Loss: 0.0178, Train Acc: 0.9969
+Batch [2600/5303], Train Loss: 0.0176, Train Acc: 0.9969
+Batch [2700/5303], Train Loss: 0.0175, Train Acc: 0.9969
+Batch [2800/5303], Train Loss: 0.0174, Train Acc: 0.9969
+Batch [2900/5303], Train Loss: 0.0173, Train Acc: 0.9970
+Batch [3000/5303], Train Loss: 0.0172, Train Acc: 0.9970
+Batch [3100/5303], Train Loss: 0.0171, Train Acc: 0.9970
+Batch [3200/5303], Train Loss: 0.0171, Train Acc: 0.9970
+Batch [3300/5303], Train Loss: 0.0169, Train Acc: 0.9971
+Batch [3400/5303], Train Loss: 0.0169, Train Acc: 0.9970
+Batch [3500/5303], Train Loss: 0.0169, Train Acc: 0.9970
+Batch [3600/5303], Train Loss: 0.0167, Train Acc: 0.9971
+Batch [3700/5303], Train Loss: 0.0166, Train Acc: 0.9971
+Batch [3800/5303], Train Loss: 0.0164, Train Acc: 0.9971
+Batch [3900/5303], Train Loss: 0.0164, Train Acc: 0.9971
+Batch [4000/5303], Train Loss: 0.0163, Train Acc: 0.9971
+Batch [4100/5303], Train Loss: 0.0167, Train Acc: 0.9971
+Batch [4200/5303], Train Loss: 0.0172, Train Acc: 0.9970
+Batch [4300/5303], Train Loss: 0.0170, Train Acc: 0.9970
+Batch [4400/5303], Train Loss: 0.0169, Train Acc: 0.9970
+Batch [4500/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [4600/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [4700/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [4800/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [4900/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [5000/5303], Train Loss: 0.0166, Train Acc: 0.9970
+Batch [5100/5303], Train Loss: 0.0167, Train Acc: 0.9970
+Batch [5200/5303], Train Loss: 0.0166, Train Acc: 0.9970
+Batch [5300/5303], Train Loss: 0.0165, Train Acc: 0.9971
+Train Loss: 0.0165, Train Acc: 0.9971
+Test Accuracy: 0.9980
+Confusion Matrix:
+[[45860   123]
+ [   43 38819]]
+Epoch time: 5.4849 minutes and 29.0928 seconds
+Best Train Acc: 0.9973
+Total training time: 29.83335009813309 minutes and 50.00100588798523 seconds

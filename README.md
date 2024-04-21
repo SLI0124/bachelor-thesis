@@ -46,7 +46,7 @@ python main.py
 ## Trénování modelů
 
 Pokud chcete trénovat model, podívejte se na soubor `model_training.py` ve složce *model_training*.
-Existuje [textový soubor](model_training/README), který obsahuje parametry pro trénování modelu a nějaké
+Existuje [textový soubor](model_training/README.md), který obsahuje parametry pro trénování modelu a nějaké
 další příklady.
 
 ```
