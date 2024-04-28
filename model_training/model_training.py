@@ -91,12 +91,12 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
             print(f'Saved the new best model to {save_path}')
             logger.info(f'Saved the new best model to {save_path}')
 
-        print(f'Epoch time: {time.time() - epoch_time}  seconds.')
-        logger.info(f'Epoch time: {time.time() - epoch_time}  seconds.')
+        print(f'Epoch time: {time.time() - epoch_time} seconds.')
+        logger.info(f'Epoch time: {time.time() - epoch_time} seconds.')
         epoch_time = time.time()
 
-    print(f'Best Train Acc: {best_acc}, Best Test Acc: {test_model(model, test_dataloader, device)}')
-    logger.info(f'Best Train Acc: {best_acc}, Best Test Acc: {test_model(model, test_dataloader, device)}')
+    print(f'Best Train Acc: {best_acc}')
+    logger.info(f'Best Train Acc: {best_acc}')
 
 
 def main():
@@ -107,7 +107,7 @@ def main():
                         help='The dataset to use. Choose between pklot, cnrpark, acmps, acpds, spkl')
     parser.add_argument('--camera_view', type=str,
                         help='For the PKLot dataset, choose between puc, ufpr04, ufpr05, and all, '
-                             'for CNRPark choose between cnrpark (camera A and B), cnrpark_ext (camera 0-9 and cnrpar)'
+                             'for CNRPark choose between cnrpark (camera A and B), cnrpark_ext (camera 0-9 and cnrpark)'
                              ' and all, '
                              'for ACPDS default and only option is all, '
                              'for ACPMS default and only option is all, '
