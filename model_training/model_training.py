@@ -15,6 +15,14 @@ from datasets_classes import FolderDataset
 
 logger = logging.getLogger()
 
+BATCH_SIZE = 64
+LEARNING_RATE = 0.001
+NUM_EPOCHS = 5
+NUM_OF_WORKERS = 4
+IMAGE_WIDTH = 224
+IMAGE_HEIGHT = 224
+ROTATION_ANGLE = 10
+
 
 def train_model(model, dataloader, criterion, optimizer, device):
     model.train()
@@ -227,16 +235,16 @@ def main():
 
     # transformations for the dataset, different for training and testing
     transform_train = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((IMAGE_WIDTH, IMAGE_HEIGHT)),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomRotation(10),
+        transforms.RandomRotation(ROTATION_ANGLE),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406],
                              std=[0.229, 0.224, 0.225])
     ])
 
     transform_test = transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((IMAGE_WIDTH, IMAGE_HEIGHT)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406],
                              std=[0.229, 0.224, 0.225])
@@ -249,9 +257,9 @@ def main():
     train_dataset = FolderDataset.FolderDataset(train_dataset_dir, transform=transform_train)
     test_dataset = FolderDataset.FolderDataset(test_dataset_dir, transform=transform_test)
 
-    train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True, pin_memory=True,
-                                  num_workers=4)
-    test_dataloader = DataLoader(test_dataset, batch_size=64, shuffle=False, num_workers=4,
+    train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_OF_WORKERS,
+                                  pin_memory=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_OF_WORKERS,
                                  pin_memory=True)
 
     # set the device to cuda if available, otherwise to cpu
@@ -265,14 +273,14 @@ def main():
     elif model_argument == 'squeezenet':
         model = models.squeezenet1_0(weights=None)
     elif model_argument == 'shufflenet':
-        model = models.shufflenet_v2_x1_0(weights=None)
+        model = models.shufflenet_v2_x0_5(weights=None)
     else:
         raise ValueError(
             'Invalid model. Please choose between alexnet, mobilenet, squeezenet, shufflenet.')
 
     model.to(device)
 
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
     criterion = nn.CrossEntropyLoss()
 
@@ -281,7 +289,7 @@ def main():
     logger.info('Training the model...')
     total_time = time.time()
 
-    train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, 5,
+    train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, NUM_EPOCHS,
                        dataset_name, model_argument, test_size_split_argument, camera_view_argument)
 
     print(f'Total training time: {time.time() - total_time} seconds.')
