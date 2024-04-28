@@ -1,51 +1,71 @@
-# Informace o skriptu pro trénování modelu na datasetu PKLot
+# Návod k použití trénování modelu
 
-Tento skript slouží k trénování modelu na datasetu PKLot pomocí frameworku PyTorch.
+## Parametry vstupu
 
-## Parametry:
+- `--dataset`: Název datasetu, který chcete použít. Vyberte mezi:
+    - `pklot`
+    - `cnrpark`
+    - `acmps`
+    - `acpds`
+    - `spkl`
 
-- `--dataset`: Určuje dataset, který se má použít.
-    - **Možné hodnoty:** 'puc', 'ufpr04', 'ufpr05', 'all'
-    - **Výchozí hodnota:** žádná (povinný parametr)
-    - **Příklady:**
-      ```bash
-      python train_model.py --dataset puc --model alexnet --epochs 10 --weights default --eighty_twenty_split True
-      python train_model.py --dataset ufpr04 --model squeezenet --epochs 20 --weights none --eighty_twenty_split False
-      ```
+- `--camera_view`:
+    - pro dataset PKLot vyberte mezi `puc`, `ufpr04`, `ufpr05` a `all`
+    - pro CNRPark vyberte mezi `cnrpark` (kamera A a B), `cnrpark_ext` (kamera 0-9 a cnrpark) a `all`
+    - pro ACPDS vyberte `all`
+    - pro ACPMS vyberte `all`
+    - pro SPKL vyberte `all`
 
-- `--model`: Určuje architekturu modelu, která se má použít.
-    - **Možné hodnoty:** 'alexnet', 'mobilenet', 'squeezenet'
-    - **Výchozí hodnota:** žádná (povinný parametr)
-    - **Příklady:**
-      ```bash
-      python train_model.py --dataset puc --model alexnet --epochs 10 --weights default --eighty_twenty_split True
-      python train_model.py --dataset ufpr04 --model squeezenet --epochs 20 --weights none --eighty_twenty_split False
-      ```
+- `--model`: Název modelu, který chcete použít. Vyberte mezi:
+    - `alexnet`
+    - `mobilenet`
+    - `squeezenet`
+    - `efficientnet`
+    - `shufflenet`
 
-- `--epochs`: Určuje počet epoch pro trénování modelu.
-    - **Možné hodnoty:** Celé číslo (např. 10, 20, 50)
-    - **Výchozí hodnota:** žádná (povinný parametr)
-    - **Příklady:**
-      ```bash
-      python train_model.py --dataset puc --model alexnet --epochs 10 --weights default --eighty_twenty_split True
-      python train_model.py --dataset ufpr04 --model squeezenet --epochs 20 --weights none --eighty_twenty_split False
-      ```
+- `--train_split`: Procento datasetu, které chcete použít pro trénování. Zbytek bude použit pro testování. Výchozí
+  hodnota je 80.
+    - 80 - 80% trénovacích dat, 20% testovacích dat
+    - 50 - 50% trénovacích dat, 50% testovacích dat
 
-- `--eighty_twenty_split`: Určuje, zda se má použít rozdělení 80/20 pro trénování a testování.
-    - **Možné hodnoty:** True, False
-    - **Výchozí hodnota:** žádná (povinný parametr)
-    - **Příklady:**
-      ```bash
-      python train_model.py --dataset puc --model alexnet --epochs 10 --weights default --eighty_twenty_split True
-      python train_model.py --dataset ufpr04 --model squeezenet --epochs 20 --weights none --eighty_twenty_split False
-      ```
+## Příklad použití
 
-- `--weights`: Určuje váhy, které se mají použít pro model.
-    - **Možné hodnoty:** 'default', 'none'
-    - **Výchozí hodnota:** žádná (povinný parametr)
-    - **Příklady:**
-      ```bash
-      python train_model.py --dataset puc --model alexnet --epochs 10 --weights default --eighty_twenty_split True
-      python train_model.py --dataset ufpr04 --model squeezenet --epochs 20 --weights none --eighty_twenty_split False
-      ```
+```bash
+python model_training.py --dataset pklot --camera_view puc --model alexnet --train_split 80
+python model_training.py --dataset pklot --camera_view ufpr04 --model mobilenet --train_split 50
+python model_training.py --dataset pklot --camera_view ufpr05 --model squeezenet --train_split 80
+python model_training.py --dataset pklot --camera_view all --model efficientnet --train_split 50
+python model_training.py --dataset pklot --camera_view all --model shufflenet --train_split 80
+```
+
+```bash
+python model_training.py --dataset cnrpark --camera_view cnrpark --model alexnet --train_split 80
+python model_training.py --dataset cnrpark --camera_view cnrparkext --model mobilenet --train_split 50
+python model_training.py --dataset cnrpark --camera_view all --model squeezenet --train_split 80
+```
+
+```bash
+python model_training.py --dataset acmps --camera_view all --model efficientnet --train_split 50
+```
+
+```bash
+python model_training.py --dataset acpds --camera_view all --model shufflenet --train_split 80
+```
+
+```bash
+python model_training.py --dataset spkl --camera_view all --model alexnet --train_split 50
+```
+
+## Výstup
+
+- Výstupe je logovací soubor, který obsahuje informace o průběhu trénování modelu.
+- Model je uložen v adresáři `../data/models/{dataset_name}/{camera_view}/{model_name}/{train_split}/best_model.pth`
+- Výstupní soubor obsahuje informace o trénování modelu, jako je ztráta, přesnost, matice záměn a další.
+
+Pokud chcete vizualizovat více metrik, jako je ztráta, přesnost, matice záměn atd., můžete nakouknot do složky a jejího
+obsahu.
+Je zde [popisující skript](../model_visualization/README.md) pro vizualizaci modelu.
+
+
+
 
