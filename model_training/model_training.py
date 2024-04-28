@@ -113,8 +113,7 @@ def main():
                              'for ACPMS default and only option is all, '
                              'for SPKL default and only option is all.')
     parser.add_argument('--model', type=str,
-                        help='The model to use. Choose between alexnet, mobilenet, squeezenet, '
-                             'efficientnet, shufflenet.')
+                        help='The model to use. Choose between alexnet, mobilenet, squeezenet and shufflenet.')
     parser.add_argument('--train_split', type=int,
                         help='The percentage of the dataset to use for training. The rest will be used for testing.',
                         default=80)
@@ -265,13 +264,11 @@ def main():
         model = models.mobilenet_v2(weights=None)
     elif model_argument == 'squeezenet':
         model = models.squeezenet1_0(weights=None)
-    elif model_argument == 'efficientnet':
-        model = models.efficientnet_b0(weights=None)
     elif model_argument == 'shufflenet':
         model = models.shufflenet_v2_x1_0(weights=None)
     else:
         raise ValueError(
-            'Invalid model. Please choose between alexnet, mobilenet, squeezenet, efficientnet, shufflenet.')
+            'Invalid model. Please choose between alexnet, mobilenet, squeezenet, shufflenet.')
 
     model.to(device)
 

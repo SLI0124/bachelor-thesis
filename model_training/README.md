@@ -20,11 +20,11 @@
     - `alexnet`
     - `mobilenet`
     - `squeezenet`
-    - `efficientnet`
     - `shufflenet`
 
 - `--train_split`: Procento datasetu, které chcete použít pro trénování. Zbytek bude použit pro testování. Výchozí
-  hodnota je 80.
+  hodnota je 80. Pokud byste chtěli použít jiné procento, spustě [skript](../utils/split_datasets.py) pro rozdělení
+  datasetu.
     - 80 - 80% trénovacích dat, 20% testovacích dat
     - 50 - 50% trénovacích dat, 50% testovacích dat
 
@@ -34,7 +34,6 @@
 python model_training.py --dataset pklot --camera_view puc --model alexnet --train_split 80
 python model_training.py --dataset pklot --camera_view ufpr04 --model mobilenet --train_split 50
 python model_training.py --dataset pklot --camera_view ufpr05 --model squeezenet --train_split 80
-python model_training.py --dataset pklot --camera_view all --model efficientnet --train_split 50
 python model_training.py --dataset pklot --camera_view all --model shufflenet --train_split 80
 ```
 
@@ -45,7 +44,7 @@ python model_training.py --dataset cnrpark --camera_view all --model squeezenet 
 ```
 
 ```bash
-python model_training.py --dataset acmps --camera_view all --model efficientnet --train_split 50
+python model_training.py --dataset acmps --camera_view all --model mobilenet --train_split 50
 ```
 
 ```bash
