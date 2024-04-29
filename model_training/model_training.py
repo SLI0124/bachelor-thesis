@@ -22,6 +22,8 @@ NUM_OF_WORKERS = 4
 IMAGE_WIDTH = 224
 IMAGE_HEIGHT = 224
 ROTATION_ANGLE = 10
+NORMALIZE_MEAN = [0.485, 0.456, 0.406]
+NORMALIZE_STD = [0.229, 0.224, 0.225]
 
 
 def train_model(model, dataloader, criterion, optimizer, device):
@@ -85,12 +87,9 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
 
         if train_acc > best_acc:
             best_acc = train_acc
-            if eighty_twenty_split == 80:
-                save_path = f'../data/models/{dataset_name}/{camera_view}/80_20/{model_name}.pth'
-            elif eighty_twenty_split == 50:
-                save_path = f'../data/models/{dataset_name}/{camera_view}/50_50/{model_name}.pth'
-            else:
-                raise ValueError('Invalid train split. Please choose between 80 and 50.')
+            valid_split = 100 - eighty_twenty_split
+            save_path = (f'../data/models/{dataset_name}/{camera_view}/{eighty_twenty_split}_{valid_split}/'
+                         f'{model_name}.pth')
 
             if not os.path.exists(os.path.dirname(save_path)):
                 os.makedirs(os.path.dirname(save_path))
@@ -239,15 +238,15 @@ def main():
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(ROTATION_ANGLE),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                             std=[0.229, 0.224, 0.225])
+        transforms.Normalize(mean=NORMALIZE_MEAN,
+                             std=NORMALIZE_STD)
     ])
 
     transform_test = transforms.Compose([
         transforms.Resize((IMAGE_WIDTH, IMAGE_HEIGHT)),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                             std=[0.229, 0.224, 0.225])
+        transforms.Normalize(mean=NORMALIZE_MEAN,
+                             std=NORMALIZE_STD)
     ])
 
     train_dataset_dir = dataset_dir + 'train/'
