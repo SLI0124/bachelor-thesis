@@ -20,7 +20,7 @@ class FolderDataset(Dataset):
 
     def __getitem__(self, idx):
         image_path, label = self.data[idx]
-        image = Image.open(image_path)
+        image = Image.open(image_path).convert('RGB')
         if self.transform:
             image = self.transform(image)
         return image, label
