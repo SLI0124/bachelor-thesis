@@ -222,13 +222,37 @@ def main():
 
     elif dataset_argument == 'acmps':
         dataset_name = 'acmps'
-        dataset_dir = f'../data/datasets/acmps/all'
+        if camera_view_argument == 'all':
+            if test_size_split_argument == 80:
+                dataset_dir = f'../data/datasets/acmps/80_20/'
+            elif test_size_split_argument == 50:
+                dataset_dir = f'../data/datasets/acmps/50_50/'
+            else:
+                raise ValueError('Invalid train split. Please choose between 80 and 50.')
+        else:
+            raise ValueError('Invalid camera view. Please choose all.')
     elif dataset_argument == 'acpds':
         dataset_name = 'acpds'
-        dataset_dir = f'../data/datasets/acpds/all'
+        if camera_view_argument == 'all':
+            if test_size_split_argument == 80:
+                dataset_dir = f'../data/datasets/acpds/80_20/'
+            elif test_size_split_argument == 50:
+                dataset_dir = f'../data/datasets/acpds/50_50/'
+            else:
+                raise ValueError('Invalid train split. Please choose between 80 and 50.')
+        else:
+            raise ValueError('Invalid camera view. Please choose all.')
     elif dataset_argument == 'spkl':
         dataset_name = 'spkl'
-        dataset_dir = f'../data/datasets/spkl/all'
+        if camera_view_argument == 'all':
+            if test_size_split_argument == 80:
+                dataset_dir = f'../data/datasets/spkl/80_20/'
+            elif test_size_split_argument == 50:
+                dataset_dir = f'../data/datasets/spkl/50_50/'
+            else:
+                raise ValueError('Invalid train split. Please choose between 80 and 50.')
+        else:
+            raise ValueError('Invalid camera view. Please choose all.')
     else:
         raise ValueError('Invalid dataset. Please choose between pklot, cnrpark, acmps, acpds, spkl.')
 
