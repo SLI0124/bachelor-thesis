@@ -1,9 +1,9 @@
-matplotlib
-numpy
-torchvision
-torch
-opencv-python
-pandas
-pillow
-scikit-learn
-torchsummary # testing, not final
+torch==2.3.0
+torchvision==0.18.0
+torchaudio==2.3.0
+pytorch-cuda==12.1
+pillow==10.3.0
+matplotlib==3.8.4
+torchsummary==1.5.1
+numpy==1.26.4
+scikit-learn==1.4.2
