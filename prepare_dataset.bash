@@ -181,7 +181,7 @@ echo "All datasets have been downloaded and cleaned successfully!"
 #  and 20% for testing and 50% for training and 50% for testing. If you'd like to change the splits, please do so in the
 #   create_splits.py file."
 
-cd utils/ || exit
+cd creating_split_files/ || exit
 
 python3 create_split_files.py
 python3 create_training_splits.py --split_ratio 80
