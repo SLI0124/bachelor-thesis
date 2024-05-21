@@ -5,13 +5,14 @@ import argparse
 SPLIT_DIR = '../data/splits'
 
 
-def save_images_to_file(split_directory: str, dataset: str, images: list, split_ratio: float) -> None:
+def save_images_to_file(split_directory: str, images: list, split_ratio: float) -> None:
     if not os.path.exists(split_directory):
         os.makedirs(split_directory)
 
     random.shuffle(images)
 
-    split_index = int(len(images) * split_ratio)
+    split_fraction = split_ratio / 100.0
+    split_index = int(len(images) * split_fraction)
     training_images = images[:split_index]
     testing_images = images[split_index:]
 
@@ -35,7 +36,7 @@ def main(split_ratio):
         with open(os.path.join(SPLIT_DIR, dataset, 'all.txt'), 'r') as f:
             images = f.readlines()
             images = [image.strip() for image in images]
-            save_images_to_file(os.path.join(SPLIT_DIR, dataset), 'all.txt', images, split_ratio)
+            save_images_to_file(os.path.join(SPLIT_DIR, dataset), images, split_ratio)
         print(f'Done processing {dataset}')
 
     print('Done!')
