@@ -31,20 +31,26 @@ pip install -r requirements.txt
 
 # Stáhnutí a příprava datasetů
 
-TODO
+## Stáhnutí
 
-# Předzpracování dat
-
-## Přesun obrázků
-
-Pro snadnější práci s daty byly obrázky z jednotlivých datasetů přesunuty do jedné složky.
+Pro stáhnutí a přípravu datasetů je potřeba spustit [skript download_dataset](prepare_dataset.bash). Tento skript
+stáhne všechny datasety a připraví je pro trénování modelu.
 
 ```
-python move_images_cnrpark.py
-python move_images_pklot.py
+bash download_dataset.bash
 ```
 
-## Rozdělení dat
+## Rozdělení datasetů
+
+Dále je potřeba připravit datasety pro trénování a testování modelu.
+První skript vytvoří soubory s všemi obrázky a anotacemi, které budou následně použity pro trénování a testování modelu.
+Druhý skript rozdělí datasety na trénovací a testovací data a má jediný parametr, kterým je poměr rozdělení
+trénvacíchdat. Výchozí hodnota je 80%. Základními hodnotami, které jsou použity v této práci, jsou 80% a 50%.
+
+```
+cd utils
+python prepare_datasets.py
+```
 
 Pro trénování a testování modelu byly datasety rozděleny na trénovací a testovací data. Výchozí poměr je rozdělen na:
 
@@ -53,9 +59,6 @@ Pro trénování a testování modelu byly datasety rozděleny na trénovací a 
 
 Pokud chcete změnit poměr, můžete upravit parametr **_train_ratio_** funkce `split_dataset_into_train_test`
 ve skriptu `split_dataset.py`.
-
-_**Následně je nutno přidat if podmínku pro dané rozdělení datasetu v
-[skriptu pro trénování modelů](model_training/model_training.py)!**_
 
 # Spuštění
 
@@ -66,7 +69,9 @@ Existuje [README soubor](model_training/README.md), který obsahuje parametry pr
 další příklady použití. Příklad jednoho z nich:
 
 ```
+
 python model_training.py --dataset pklot --camera_view all --model shufflenet --train_split 80
+
 ```
 
 ## evaluace modelů, vyhodnocení a vizualizace výsledků
