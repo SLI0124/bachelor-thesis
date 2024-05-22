@@ -74,6 +74,17 @@ def process_and_save_pklot(directory: str, dataset_name: str) -> None:
 
 
 def process_and_save_cnr(directory: str, dataset_name: str) -> None:
+    """
+    CNRPark-Patches-150x150 only appends path to the image, not the actual label.
+    cnr/CNRPark-Patches-150x150/A/busy/20150703_1555_25.jpg
+    cnr/CNRPark-Patches-150x150/B/busy/20150708_1135_45.jpg
+    cnr/CNRPark-Patches-150x150/A/busy/20150703_1130_50.jpg
+    cnr/CNRPark-Patches-150x150/A/busy/20150703_1430_14.jpg
+    cnr/CNRPark-Patches-150x150/A/busy/20150703_0905_2.jpg
+    cnr/CNRPark-Patches-150x150/A/busy/20150703_1240_49.jpg
+    cnr/CNRPark-Patches-150x150/B/busy/20150708_1615_17.jpg
+    """
+
     cnr_ext_file = os.path.join(directory, 'CNR-EXT-Patches-150x150', 'LABELS', 'all.txt')
     with open(cnr_ext_file, 'r') as f:
         lines = f.readlines()
@@ -99,9 +110,13 @@ def process_and_save_cnr(directory: str, dataset_name: str) -> None:
             ]
             formatted_images = ['/'.join(image.split('/')[3:]) for image in formatted_images]
             if status == 'busy':
-                cnr_park_busy.extend(formatted_images)
+                # cnr_park_busy.extend(formatted_images)
+                # add the path and label to the list
+                cnr_park_busy.extend([f'{image} 1' for image in formatted_images])
             else:
-                cnr_park_free.extend(formatted_images)
+                # cnr_park_free.extend(formatted_images)
+                # add the path and label to the list
+                cnr_park_free.extend([f'{image} 0' for image in formatted_images])
 
     random.shuffle(cnr_park_busy)
     random.shuffle(cnr_park_free)
