@@ -50,7 +50,7 @@ def calculate_metrics(labels, predictions):
 def train_model(model, dataloader, criterion, optimizer, device):
     model.train()
     running_loss, correct, total = 0.0, 0, 0
-    train_acc, train_f1, train_recall = 0.0, 0.0, 0.0
+    train_acc, train_f1, train_recall, train_roc_auc = 0.0, 0.0, 0.0, 0.0
     all_labels, all_predictions = [], []
     for i, (images, labels) in enumerate(dataloader):
         images, labels = images.to(device), labels.to(device)
@@ -75,28 +75,34 @@ def train_model(model, dataloader, criterion, optimizer, device):
                           f'Train ROC AUC: {train_roc_auc}')
 
     print_and_log('-' * 50)
-    return running_loss / len(dataloader), train_acc, train_f1, train_recall
+    return running_loss / len(dataloader), train_acc, train_f1, train_recall, train_roc_auc
 
 
-def test_model(model, dataloader, device):
+def test_model(model, dataloader, criterion, device):
     model.eval()
     all_labels, all_predictions = [], []
+    test_loss = 0.0
     with torch.no_grad():
         for images, labels in dataloader:
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
+            loss = criterion(outputs, labels)
+            test_loss += loss.item()
             _, predicted = torch.max(outputs.data, 1)
             all_labels.extend(labels.cpu().numpy())
             all_predictions.extend(predicted.cpu().numpy())
 
+    test_loss /= len(dataloader)
     test_acc, test_f1, test_recall, test_roc_auc = calculate_metrics(all_labels, all_predictions)
 
-    print_and_log(f'Test Acc: {test_acc}, Test F1: {test_f1}, Test Recall: {test_recall}, Test ROC AUC: {test_roc_auc}')
+    print_and_log(
+        f'Test Loss: {test_loss}, Test Acc: {test_acc}, Test F1: {test_f1}, '
+        f'Test Recall: {test_recall}, Test ROC AUC: {test_roc_auc}')
 
     cm = confusion_matrix(all_labels, all_predictions)
     print_and_log(f'Confusion Matrix:\n {cm}')
 
-    return test_acc, test_f1, test_recall, test_roc_auc
+    return test_loss, test_acc, test_f1, test_recall, test_roc_auc
 
 
 def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, num_epochs, dataset_name,
@@ -109,15 +115,15 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
     for epoch in range(num_epochs):
         print_and_log(f'Epoch {epoch + 1}/{num_epochs}')
 
-        train_loss, train_acc, train_f1, train_recall = train_model(model, train_dataloader, criterion, optimizer,
-                                                                    device)
+        train_loss, train_acc, train_f1, train_recall, train_roc_auc = train_model(model, train_dataloader, criterion,
+                                                                                   optimizer, device)
         train_losses.append(train_loss)
         train_accuracies.append(train_acc)
         train_f1s.append(train_f1)
         train_recalls.append(train_recall)
 
         print_and_log(f'Train Loss: {train_loss}, Train Acc: {train_acc}, '
-                      f'Train F1: {train_f1}, Train Recall: {train_recall}')
+                      f'Train F1: {train_f1}, Train Recall: {train_recall}, Train ROC AUC: {train_roc_auc}')
 
         all_labels, all_probs = [], []
         with torch.no_grad():
@@ -131,7 +137,10 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         train_roc_auc = roc_auc_score(all_labels, all_probs)
         train_roc_aucs.append(train_roc_auc)
 
-        valid_acc, valid_f1, valid_recall, valid_roc_auc = test_model(model, test_dataloader, device)
+        # valid_acc, valid_f1, valid_recall, valid_roc_auc = test_model(model, test_dataloader, device)
+        valid_loss, valid_acc, valid_f1, valid_recall, valid_roc_auc = test_model(model, test_dataloader, criterion,
+                                                                                  device)
+        valid_losses.append(valid_loss)
         valid_accuracies.append(valid_acc)
         valid_f1s.append(valid_f1)
         valid_recalls.append(valid_recall)
@@ -140,7 +149,7 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         if train_acc > best_acc:
             best_acc = train_acc
             valid_split = 100 - eighty_twenty_split
-            save_path = (f'../data/models/{dataset_name}/{camera_view}/{eighty_twenty_split}_{valid_split}/'
+            save_path = (f'../data/models/{dataset_name}/{camera_view}/{eighty_twenty_split}_{valid_split}_split/'
                          f'{num_epochs}_epochs/{model_name}.pth')
 
             if not os.path.exists(os.path.dirname(save_path)):
@@ -165,6 +174,7 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
 
     print_and_log(f'\nBest Train Accuracy: {best_acc}\n')
 
+    print_and_log(f'Average Test Loss: {np.mean(valid_losses)}')
     print_and_log(f'Average Test Accuracy: {np.mean(valid_accuracies)}')
     print_and_log(f'Average Test F1: {np.mean(valid_f1s)}')
     print_and_log(f'Average Test Recall: {np.mean(valid_recalls)}')
