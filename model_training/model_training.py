@@ -6,7 +6,7 @@ import logging
 import numpy as np
 import torch
 import torchvision.models as models
-from sklearn.metrics import confusion_matrix, roc_auc_score, f1_score, recall_score
+from sklearn.metrics import confusion_matrix, roc_auc_score, f1_score, recall_score, accuracy_score
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch import nn
@@ -35,7 +35,7 @@ def print_and_log(message):
 
 
 def calculate_metrics(labels, predictions):
-    accuracy = np.mean(np.array(labels) == np.array(predictions))
+    accuracy = accuracy_score(labels, predictions)
     f1 = f1_score(labels, predictions, average='weighted')
     recall = recall_score(labels, predictions, average='weighted', zero_division=1)
 
