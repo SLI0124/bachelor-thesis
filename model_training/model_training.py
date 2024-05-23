@@ -6,7 +6,7 @@ import logging
 import numpy as np
 import torch
 import torchvision.models as models
-from sklearn.metrics import confusion_matrix, roc_auc_score, f1_score, recall_score, accuracy_score
+from sklearn.metrics import confusion_matrix, roc_auc_score, f1_score, accuracy_score
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch import nn
@@ -37,20 +37,19 @@ def print_and_log(message):
 def calculate_metrics(labels, predictions):
     accuracy = accuracy_score(labels, predictions)
     f1 = f1_score(labels, predictions, average='weighted')
-    recall = recall_score(labels, predictions, average='weighted', zero_division=1)
 
     if len(np.unique(labels)) == 2:
         roc_auc = roc_auc_score(labels, predictions)
     else:
         roc_auc = None
 
-    return accuracy, f1, recall, roc_auc
+    return accuracy, f1, roc_auc
 
 
 def train_model(model, dataloader, criterion, optimizer, device):
     model.train()
     running_loss, correct, total = 0.0, 0, 0
-    train_acc, train_f1, train_recall, train_roc_auc = 0.0, 0.0, 0.0, 0.0
+    train_acc, train_f1, train_roc_auc = 0.0, 0.0, 0.0
     all_labels, all_predictions = [], []
     for i, (images, labels) in enumerate(dataloader):
         images, labels = images.to(device), labels.to(device)
@@ -68,14 +67,13 @@ def train_model(model, dataloader, criterion, optimizer, device):
         all_predictions.extend(predicted.cpu().numpy())
 
         if (i + 1) % 100 == 0:
-            train_acc, train_f1, train_recall, train_roc_auc = calculate_metrics(all_labels, all_predictions)
+            train_acc, train_f1, train_roc_auc = calculate_metrics(all_labels, all_predictions)
 
             print_and_log(f'Batch [{i + 1}/{len(dataloader)}], Train Loss: {loss.item()}, '
-                          f'Train Acc: {train_acc}, Train F1: {train_f1}, Train Recall: {train_recall}, '
-                          f'Train ROC AUC: {train_roc_auc}')
+                          f'Train Acc: {train_acc}, Train F1: {train_f1}, Train ROC AUC: {train_roc_auc}')
 
     print_and_log('-' * 50)
-    return running_loss / len(dataloader), train_acc, train_f1, train_recall, train_roc_auc
+    return running_loss / len(dataloader), train_acc, train_f1, train_roc_auc
 
 
 def test_model(model, dataloader, criterion, device):
@@ -93,37 +91,35 @@ def test_model(model, dataloader, criterion, device):
             all_predictions.extend(predicted.cpu().numpy())
 
     test_loss /= len(dataloader)
-    test_acc, test_f1, test_recall, test_roc_auc = calculate_metrics(all_labels, all_predictions)
+    test_acc, test_f1, test_roc_auc = calculate_metrics(all_labels, all_predictions)
 
     print_and_log(
-        f'Test Loss: {test_loss}, Test Acc: {test_acc}, Test F1: {test_f1}, '
-        f'Test Recall: {test_recall}, Test ROC AUC: {test_roc_auc}')
+        f'Test Loss: {test_loss}, Test Acc: {test_acc}, Test F1: {test_f1}, Test ROC AUC: {test_roc_auc}')
 
     cm = confusion_matrix(all_labels, all_predictions)
-    print_and_log(f'Confusion Matrix:\n {cm}')
+    print_and_log(f'Confusion Matrix of the test set: \n{cm}')
 
-    return test_loss, test_acc, test_f1, test_recall, test_roc_auc
+    return test_loss, test_acc, test_f1, test_roc_auc
 
 
 def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, optimizer, device, num_epochs, dataset_name,
                        model_name, eighty_twenty_split, camera_view):
     best_acc = 0.0
     epoch_time = time.time()
-    train_losses, train_accuracies, train_f1s, train_recalls, train_roc_aucs = [], [], [], [], []
-    valid_losses, valid_accuracies, valid_f1s, valid_recalls, valid_roc_aucs = [], [], [], [], []
+    train_losses, train_accuracies, train_f1s, train_roc_aucs = [], [], [], []
+    valid_losses, valid_accuracies, valid_f1s, valid_roc_aucs = [], [], [], []
 
     for epoch in range(num_epochs):
         print_and_log(f'Epoch {epoch + 1}/{num_epochs}')
 
-        train_loss, train_acc, train_f1, train_recall, train_roc_auc = train_model(model, train_dataloader, criterion,
-                                                                                   optimizer, device)
+        train_loss, train_acc, train_f1, train_roc_auc = train_model(model, train_dataloader, criterion, optimizer,
+                                                                     device)
         train_losses.append(train_loss)
         train_accuracies.append(train_acc)
         train_f1s.append(train_f1)
-        train_recalls.append(train_recall)
 
         print_and_log(f'Train Loss: {train_loss}, Train Acc: {train_acc}, '
-                      f'Train F1: {train_f1}, Train Recall: {train_recall}, Train ROC AUC: {train_roc_auc}')
+                      f'Train F1: {train_f1}, Train ROC AUC: {train_roc_auc}')
 
         all_labels, all_probs = [], []
         with torch.no_grad():
@@ -137,13 +133,10 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         train_roc_auc = roc_auc_score(all_labels, all_probs)
         train_roc_aucs.append(train_roc_auc)
 
-        # valid_acc, valid_f1, valid_recall, valid_roc_auc = test_model(model, test_dataloader, device)
-        valid_loss, valid_acc, valid_f1, valid_recall, valid_roc_auc = test_model(model, test_dataloader, criterion,
-                                                                                  device)
+        valid_loss, valid_acc, valid_f1, valid_roc_auc = test_model(model, test_dataloader, criterion, device)
         valid_losses.append(valid_loss)
         valid_accuracies.append(valid_acc)
         valid_f1s.append(valid_f1)
-        valid_recalls.append(valid_recall)
         valid_roc_aucs.append(valid_roc_auc)
 
         if train_acc > best_acc:
@@ -165,7 +158,6 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
     print_and_log(f'Average Train Loss: {np.mean(train_losses)}')
     print_and_log(f'Average Train Accuracy: {np.mean(train_accuracies)}')
     print_and_log(f'Average Train F1: {np.mean(train_f1s)}')
-    print_and_log(f'Average Train Recall: {np.mean(train_recalls)}')
 
     if train_roc_aucs:
         print_and_log(f'Average Train ROC AUC: {np.mean(train_roc_aucs)}')
@@ -177,7 +169,6 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
     print_and_log(f'Average Test Loss: {np.mean(valid_losses)}')
     print_and_log(f'Average Test Accuracy: {np.mean(valid_accuracies)}')
     print_and_log(f'Average Test F1: {np.mean(valid_f1s)}')
-    print_and_log(f'Average Test Recall: {np.mean(valid_recalls)}')
 
     if valid_roc_aucs:
         print_and_log(f'Average Test ROC AUC: {np.mean(valid_roc_aucs)}\n')
@@ -288,7 +279,7 @@ def main():
     # set the device to cuda if available, otherwise to cpu
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # create match clause for the model_argument
+    # choose the model based on the model_argument
     match model_argument:
         case 'alexnet':
             model = models.alexnet(weights=None)
