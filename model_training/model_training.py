@@ -149,7 +149,7 @@ def train_and_evaluate(train_dataloader, test_dataloader, model, criterion, opti
         if train_acc > best_acc:
             best_acc = train_acc
             valid_split = 100 - eighty_twenty_split
-            save_path = (f'../data/models/{dataset_name}/{camera_view}/{eighty_twenty_split}_{valid_split}_split/'
+            save_path = (f'../data/models/{eighty_twenty_split}_{valid_split}_split/{dataset_name}/{camera_view}/'
                          f'{num_epochs}_epochs/{model_name}.pth')
 
             if not os.path.exists(os.path.dirname(save_path)):
@@ -239,7 +239,7 @@ def main():
     # set the logger
     logger.setLevel(logging.INFO)
     file_handler = logging.FileHandler(log_file_name)
-    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    formatter = logging.Formatter('%(message)s')
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
