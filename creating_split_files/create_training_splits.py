@@ -11,20 +11,24 @@ def save_images_to_file(split_directory: str, images: list, split_ratio: int, pr
 
     random.shuffle(images)
 
-    split_fraction = split_ratio / 100.0
-    split_index = int(len(images) * split_fraction)
-    training_images = images[:split_index]
-    testing_images = images[split_index:]
+    train_test_split = int(len(images) * split_ratio / 100)
+    train_images = images[:train_test_split]
 
-    training_ratio = split_ratio
-    testing_ratio = 100 - training_ratio
+    test_images = images[train_test_split:]
+    test_split = int(len(test_images) / 2)
+    validation_images = test_images[:test_split]
+    test_images = test_images[test_split:]
 
-    with open(os.path.join(split_directory, f'{prefix}_train_{training_ratio}_{testing_ratio}.txt'), 'w') as f:
-        for image in training_images:
+    with open(os.path.join(split_directory, f'{prefix}_train_{split_ratio}_{100 - split_ratio}.txt'), 'w') as f:
+        for image in train_images:
             f.write(image + '\n')
 
-    with open(os.path.join(split_directory, f'{prefix}_test_{training_ratio}_{testing_ratio}.txt'), 'w') as f:
-        for image in testing_images:
+    with open(os.path.join(split_directory, f'{prefix}_valid_{split_ratio}_{100 - split_ratio}.txt'), 'w') as f:
+        for image in validation_images:
+            f.write(image + '\n')
+
+    with open(os.path.join(split_directory, f'{prefix}_test_{split_ratio}_{100 - split_ratio}.txt'), 'w') as f:
+        for image in test_images:
             f.write(image + '\n')
 
 
