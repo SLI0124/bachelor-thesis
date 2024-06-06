@@ -74,17 +74,6 @@ def process_and_save_pklot(directory: str, dataset_name: str) -> None:
 
 
 def process_and_save_cnr(directory: str, dataset_name: str) -> None:
-    """
-    CNRPark-Patches-150x150 only appends path to the image, not the actual label.
-    cnr/CNRPark-Patches-150x150/A/busy/20150703_1555_25.jpg
-    cnr/CNRPark-Patches-150x150/B/busy/20150708_1135_45.jpg
-    cnr/CNRPark-Patches-150x150/A/busy/20150703_1130_50.jpg
-    cnr/CNRPark-Patches-150x150/A/busy/20150703_1430_14.jpg
-    cnr/CNRPark-Patches-150x150/A/busy/20150703_0905_2.jpg
-    cnr/CNRPark-Patches-150x150/A/busy/20150703_1240_49.jpg
-    cnr/CNRPark-Patches-150x150/B/busy/20150708_1615_17.jpg
-    """
-
     cnr_ext_file = os.path.join(directory, 'CNR-EXT-Patches-150x150', 'LABELS', 'all.txt')
     with open(cnr_ext_file, 'r') as f:
         lines = f.readlines()
