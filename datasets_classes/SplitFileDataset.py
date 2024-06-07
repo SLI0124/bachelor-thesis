@@ -19,7 +19,7 @@ class SplitFileDataset(Dataset):
 
     def __getitem__(self, idx):
         path, label = self.samples[idx]
-        img = Image.open(os.path.join(self.root_dir, path))
+        img = Image.open(os.path.join(self.root_dir, path)).convert('RGB')
         if self.transform:
             img = self.transform(img)
         return img, label
