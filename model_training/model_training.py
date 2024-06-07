@@ -344,12 +344,12 @@ def main():
     if k_fold_argument:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_train_80_20.txt')
-        valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/'f'{camera_view_argument}'
+        valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_valid_80_20.txt')
     else:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_train_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
-        valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/'f'{camera_view_argument}'
+        valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_valid_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
     print_and_log(f'Train split file: {train_split_file}')
     print_and_log(f'Validation split file: {valid_split_file}')
