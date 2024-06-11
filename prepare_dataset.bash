@@ -27,6 +27,36 @@ else
   echo "data/datasets directory already exists"
 fi
 
+# make data/splits directory, if it doesn't exist
+if [ ! -d "data/splits" ];
+then
+  mkdir -p data/splits
+  echo "data/splits directory created"
+else
+  echo "data/splits directory already exists"
+fi
+
+# download the splits, unzip it and delete the zip file and clean the directory
+# if you have zip files already downloaded, put it in the data/splits directory and it will not download it again
+if [ ! -f "data/splits/splits.zip" ];
+then
+  if [ ! -f "data/splits/splits.zip" ];
+  then
+    wget -P data/splits https://github.com/fabiocarrara/deep-parking/releases/download/archive/splits.zip
+  else
+    echo "data/splits/splits.zip already exists"
+  fi
+else
+  echo "data/splits/splits.zip already exists"
+fi
+
+echo "Extracting splits..."
+unzip -q data/splits/splits.zip -d data/splits
+rm data/splits/splits.zip
+mv data/splits/splits/* data/splits/
+rm -rf data/splits/splits
+mv data/splits/PKLot/ data/splits/pklot_download
+
 # make data/datasets/cnr directory, if it doesn't exist and proceed to download the datasets
 if [ ! -d "data/datasets/cnr" ]; 
 then
@@ -180,7 +210,6 @@ echo "All datasets have been downloaded and cleaned successfully!"
 # echo "Now I will create text file with their splits for training and testing. Basic splits are 80% for training
 #  and 20% for testing and 50% for training and 50% for testing. If you'd like to change the splits, please do so in the
 #   create_splits.py file."
-
 cd creating_split_files/ || exit
 
 python3 create_split_files.py

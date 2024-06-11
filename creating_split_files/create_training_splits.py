@@ -61,7 +61,10 @@ def main(split_ratio: int):
     datasets = os.listdir(SPLIT_DIR)
 
     for dataset in datasets:
-        process_dataset(dataset, split_ratio)
+        if dataset in ['CNRParkAB', 'CNRPark-EXT', 'Combined', 'pklot_download']:
+            continue
+        else:
+            process_dataset(dataset, split_ratio)
 
     print('Done!')
 
