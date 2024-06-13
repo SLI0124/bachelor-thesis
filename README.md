@@ -79,14 +79,6 @@ cd model_training
 python3 model_training.py --dataset cnr --camera_view cnr_park_ext --model mobilenet --k_fold 5 --num_epochs 5
 ```
 
-## evaluace modelů, vyhodnocení a vizualizace výsledků
-
-TODO
-
-## Vyhodnocení modelů
-
-TODO
-
-## Vizualizace výsledků
+## Vyhodnocení modelů, vizualizace výsledků, ...
 
 TODO

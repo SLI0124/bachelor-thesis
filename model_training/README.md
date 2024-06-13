@@ -46,11 +46,11 @@ python3 model_training.py --dataset acpds --camera_view all --model mobilenet --
 ```
 
 ```bash
-python3 model_training.py --dataset cnr --camera_view cnr_park_ext_sunny --model mobilenet --k_fold 5 --num_epochs 5; 
+python3 model_training.py --dataset cnr --camera_view cnr_park_ext_sunny --model mobilenet --k_fold 5 --num_epochs 5 
 ```
 
 ```bash
-python model_training.py --dataset pklot --camera_view all_rainy --model mobilenet --k_fold 5 --num_epochs 5; 
+python model_training.py --dataset pklot --camera_view all_rainy --model mobilenet --k_fold 5 --num_epochs 5
 ```
 
 ## Výstup
