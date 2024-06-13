@@ -1,0 +1,82 @@
+Train split file: ../data/splits/spkl/all_train_80_20.txt
+Validation split file: ../data/splits/spkl/all_valid_80_20.txt
+
+**************************************************
+Train dataset size: 15473
+Train dataset class distribution: {'empty': 3202, 'occupied': 12271}
+Valid dataset size: 1934
+Valid dataset class distribution: {'empty': 420, 'occupied': 1514}
+Training the model...
+**************************************************
+Epoch 1/5
+Batch [100/242], Train Loss: 0.16327004134655, Train Acc: 0.8803125, Train F1: 0.8842753852081082, Train ROC AUC: 0.8196409821905019
+Batch [200/242], Train Loss: 0.15489742159843445, Train Acc: 0.905625, Train F1: 0.9067931818437274, Train ROC AUC: 0.8474406895120088
+--------------------------------------------------
+Train Loss: 0.33254657379420827, Train Acc: 0.9096490661151684, Train F1: 0.9103224904066984, Train ROC AUC: 0.8533723574790856
+Valid Loss: 0.227471663586555, Valid Acc: 0.9172699069286453, Valid F1: 0.9108248984153845, Valid ROC AUC: 0.8181260615210416
+Confusion Matrix for the validation set:
+ [[ 270  150]
+ [  10 1504]]
+Saved the new best model to ../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth with accuracy 0.9172699069286453
+Epoch time: 71.6910343170166 seconds.
+==================================================
+Epoch 2/5
+Batch [100/242], Train Loss: 0.18103820085525513, Train Acc: 0.93359375, Train F1: 0.9320495448609671, Train ROC AUC: 0.8781376819820075
+Batch [200/242], Train Loss: 0.27005985379219055, Train Acc: 0.935546875, Train F1: 0.9342881537223715, Train ROC AUC: 0.8837300709677766
+--------------------------------------------------
+Train Loss: 0.1786857203326442, Train Acc: 0.9368577522135333, Train F1: 0.9356329740426587, Train ROC AUC: 0.8857538690954451
+Valid Loss: 0.16079215735437408, Valid Acc: 0.9436401240951396, Valid F1: 0.9417460225853579, Valid ROC AUC: 0.8874425992325595
+Confusion Matrix for the validation set:
+ [[ 331   89]
+ [  20 1494]]
+Saved the new best model to ../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth with accuracy 0.9436401240951396
+Epoch time: 71.89831137657166 seconds.
+==================================================
+Epoch 3/5
+Batch [100/242], Train Loss: 0.1020745113492012, Train Acc: 0.94109375, Train F1: 0.9402031579421063, Train ROC AUC: 0.8952895515506667
+Batch [200/242], Train Loss: 0.12586115300655365, Train Acc: 0.941640625, Train F1: 0.9408450663643609, Train ROC AUC: 0.8984745671269169
+--------------------------------------------------
+Train Loss: 0.15787751363082367, Train Acc: 0.9428682220642409, Train F1: 0.9420692821350954, Train ROC AUC: 0.8996990130903333
+Valid Loss: 0.13122824176905618, Valid Acc: 0.9550155118924509, Valid F1: 0.9545518733543022, Valid ROC AUC: 0.9239557778197145
+Confusion Matrix for the validation set:
+ [[ 365   55]
+ [  32 1482]]
+Saved the new best model to ../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth with accuracy 0.9550155118924509
+Epoch time: 72.17199206352234 seconds.
+==================================================
+Epoch 4/5
+Batch [100/242], Train Loss: 0.07437697798013687, Train Acc: 0.9525, Train F1: 0.9519567008899004, Train ROC AUC: 0.9173934078548744
+Batch [200/242], Train Loss: 0.10899471491575241, Train Acc: 0.949921875, Train F1: 0.949321844895506, Train ROC AUC: 0.9124577352237803
+--------------------------------------------------
+Train Loss: 0.1371223652458265, Train Acc: 0.9512699541136173, Train F1: 0.9507488072871016, Train ROC AUC: 0.9154979944640785
+Valid Loss: 0.1421278427925802, Valid Acc: 0.953981385729059, Valid F1: 0.9531080734080213, Valid ROC AUC: 0.9146930238409763
+Confusion Matrix for the validation set:
+ [[ 355   65]
+ [  24 1490]]
+Epoch time: 72.29447031021118 seconds.
+==================================================
+Epoch 5/5
+Batch [100/242], Train Loss: 0.09996828436851501, Train Acc: 0.95796875, Train F1: 0.9574975414714436, Train ROC AUC: 0.9252114089405984
+Batch [200/242], Train Loss: 0.07391487807035446, Train Acc: 0.957421875, Train F1: 0.9570088292709358, Train ROC AUC: 0.9255173908113918
+--------------------------------------------------
+Train Loss: 0.12529047029015938, Train Acc: 0.9576681962127577, Train F1: 0.9572655491769771, Train ROC AUC: 0.9263408453613485
+Valid Loss: 0.10763249708519827, Valid Acc: 0.9632885211995863, Valid F1: 0.9629442864453377, Valid ROC AUC: 0.9369818204692709
+Confusion Matrix for the validation set:
+ [[ 374   46]
+ [  25 1489]]
+Saved the new best model to ../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth with accuracy 0.9632885211995863
+Epoch time: 72.16325974464417 seconds.
+==================================================
+Average Train Loss: 0.18630452865873243
+Average Train Accuracy: 0.9396626381438635
+Average Train F1: 0.9392078206097063
+Average Train ROC AUC: 0.8961328158980582
+
+Best Validation Accuracy: 0.9632885211995863
+
+Average Valid Loss: 0.15385048051755273
+Average Valid Accuracy: 0.9466390899689763
+Average Valid F1: 0.9446350308416808
+Average Valid ROC AUC: 0.8962398565767125
+
+Total training time: 360.2210433483124 seconds.
