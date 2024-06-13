@@ -1,0 +1,76 @@
+Train split file: ../data/splits/cnr/cnr_park_train_80_20.txt
+Validation split file: ../data/splits/cnr/cnr_park_valid_80_20.txt
+
+**************************************************
+Train dataset size: 10067
+Train dataset class distribution: {'empty': 3331, 'occupied': 6736}
+Valid dataset size: 1258
+Valid dataset class distribution: {'empty': 432, 'occupied': 826}
+Training the model...
+**************************************************
+Epoch 1/5
+Batch [100/158], Train Loss: 0.2498275488615036, Train Acc: 0.865625, Train F1: 0.8715896906303096, Train ROC AUC: 0.8568067919988028
+--------------------------------------------------
+Train Loss: 0.42214167547188225, Train Acc: 0.8882487334856461, Train F1: 0.892054247500601, Train ROC AUC: 0.879283543314049
+Valid Loss: 0.15682915691286325, Valid Acc: 0.9395866454689984, Valid F1: 0.9389584135840671, Valid ROC AUC: 0.9236307281858129
+Confusion Matrix for the validation set:
+ [[377  55]
+ [ 21 805]]
+Saved the new best model to ../data/models/80_20_split/cnr/cnr_park/5_epochs/shufflenet.pth with accuracy 0.9395866454689984
+Epoch time: 42.87332892417908 seconds.
+==================================================
+Epoch 2/5
+Batch [100/158], Train Loss: 0.07819518446922302, Train Acc: 0.94296875, Train F1: 0.9427119632722066, Train ROC AUC: 0.9317783857729138
+--------------------------------------------------
+Train Loss: 0.13327603886210465, Train Acc: 0.9470547332869772, Train F1: 0.9468312088853307, Train ROC AUC: 0.9361558063922655
+Valid Loss: 0.07439639773219824, Valid Acc: 0.9721780604133545, Valid F1: 0.9720061384828842, Valid ROC AUC: 0.9633553044569995
+Confusion Matrix for the validation set:
+ [[404  28]
+ [  7 819]]
+Saved the new best model to ../data/models/80_20_split/cnr/cnr_park/5_epochs/shufflenet.pth with accuracy 0.9721780604133545
+Epoch time: 42.2642617225647 seconds.
+==================================================
+Epoch 3/5
+Batch [100/158], Train Loss: 0.07803931087255478, Train Acc: 0.96375, Train F1: 0.9636717766705283, Train ROC AUC: 0.956583223175226
+--------------------------------------------------
+Train Loss: 0.10460594964885636, Train Acc: 0.9618555676964339, Train F1: 0.9617637753272562, Train ROC AUC: 0.954575856008945
+Valid Loss: 0.07982920263893903, Valid Acc: 0.965818759936407, Valid F1: 0.9656911214110357, Valid ROC AUC: 0.9585126894448929
+Confusion Matrix for the validation set:
+ [[404  28]
+ [ 15 811]]
+Epoch time: 42.355422496795654 seconds.
+==================================================
+Epoch 4/5
+Batch [100/158], Train Loss: 0.20969732105731964, Train Acc: 0.97203125, Train F1: 0.9719413271144768, Train ROC AUC: 0.9653929038713154
+--------------------------------------------------
+Train Loss: 0.07437392141776089, Train Acc: 0.9729810271183074, Train F1: 0.9729181509865067, Train ROC AUC: 0.9672143867690757
+Valid Loss: 0.06135621885769069, Valid Acc: 0.9753577106518283, Valid F1: 0.9752054369419831, Valid ROC AUC: 0.9668807730248408
+Confusion Matrix for the validation set:
+ [[406  26]
+ [  5 821]]
+Saved the new best model to ../data/models/80_20_split/cnr/cnr_park/5_epochs/shufflenet.pth with accuracy 0.9753577106518283
+Epoch time: 41.94267773628235 seconds.
+==================================================
+Epoch 5/5
+Batch [100/158], Train Loss: 0.19935475289821625, Train Acc: 0.975625, Train F1: 0.9755694337664635, Train ROC AUC: 0.9700164899966024
+--------------------------------------------------
+Train Loss: 0.06303827739261751, Train Acc: 0.9771530744015099, Train F1: 0.9771053288766499, Train ROC AUC: 0.9721530130473756
+Valid Loss: 0.05566514986567199, Valid Acc: 0.9745627980922098, Valid F1: 0.9747309802638406, Valid ROC AUC: 0.9789732983588916
+Confusion Matrix for the validation set:
+ [[429   3]
+ [ 29 797]]
+Epoch time: 42.95422697067261 seconds.
+==================================================
+Average Train Loss: 0.15948717255864434
+Average Train Accuracy: 0.9494586271977749
+Average Train F1: 0.9501345423152688
+Average Train ROC AUC: 0.9418765211063421
+
+Best Validation Accuracy: 0.9753577106518283
+
+Average Valid Loss: 0.08561522520147266
+Average Valid Accuracy: 0.9655007949125597
+Average Valid F1: 0.9653184181367621
+Average Valid ROC AUC: 0.9582705586942876
+
+Total training time: 212.39091682434082 seconds.
