@@ -155,7 +155,7 @@ def train_and_evaluate(train_dataloader, valid_dataloader, model, criterion, opt
     print_and_log(f'Average Valid ROC AUC: {np.mean(valid_roc_aucs)}\n')
 
 
-def train_and_evaluate_k_fold(train_dataloader, valid_dataloader, model, criterion, optimizer, device, num_epochs,
+def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_epochs,
                               dataset_name, model_name, camera_view, k_fold_input):
     def reset_weights(m):
         if hasattr(m, 'reset_parameters'):
@@ -164,7 +164,8 @@ def train_and_evaluate_k_fold(train_dataloader, valid_dataloader, model, criteri
     results = {}
     best_valid_acc = 0.0
     k_fold = KFold(n_splits=k_fold_input, shuffle=True, random_state=42)
-    dataset = torch.utils.data.ConcatDataset([train_dataloader.dataset, valid_dataloader.dataset])
+
+    torch.manual_seed(42)
 
     for fold, (train_indices, valid_indices) in enumerate(k_fold.split(dataset)):
         print_and_log(f'Fold {fold + 1}/{k_fold_input}')
@@ -173,8 +174,10 @@ def train_and_evaluate_k_fold(train_dataloader, valid_dataloader, model, criteri
         train_sampler = SubsetRandomSampler(train_indices)
         valid_sampler = SubsetRandomSampler(valid_indices)
 
-        train_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=train_sampler, num_workers=NUM_OF_WORKERS)
-        valid_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=valid_sampler, num_workers=NUM_OF_WORKERS)
+        train_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=train_sampler,
+                                      num_workers=NUM_OF_WORKERS, pin_memory=True)
+        valid_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=valid_sampler,
+                                      num_workers=NUM_OF_WORKERS, pin_memory=True)
 
         model.apply(reset_weights)
 
@@ -341,11 +344,14 @@ def main():
     print(f'Logging to {log_file_name}')
 
     # create the paths to the split files
+    test_split_file = None
     if k_fold_argument:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_train_80_20.txt')
         valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_valid_80_20.txt')
+        test_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
+                           f'_test_80_20.txt')
     else:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_train_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
@@ -353,6 +359,8 @@ def main():
                             f'_valid_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
     print_and_log(f'Train split file: {train_split_file}')
     print_and_log(f'Validation split file: {valid_split_file}')
+    print_and_log(f'Test split file: {test_split_file}' if k_fold_argument else '')
+    print_and_log('*' * 50)
 
     # transformations for the dataset, different for training and validation
     transform_train = transforms.Compose([
@@ -380,19 +388,35 @@ def main():
     valid_dataloader = DataLoader(valid_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_OF_WORKERS,
                                   pin_memory=True)
 
+    whole_dataset, test_dataset = None, None
+    if k_fold_argument:
+        test_dataset = SplitFileDataset.SplitFileDataset(test_split_file, PATH_TO_IMAGES, transform=transform_valid)
+        whole_dataset = torch.utils.data.ConcatDataset([test_dataset, valid_dataset])
+        whole_dataset = torch.utils.data.ConcatDataset([whole_dataset, train_dataset])
+
     # print the number of samples in the train and validation dataset and the class distribution
-    print_and_log(f'Train dataset size: {len(train_dataset)}')
-    print_and_log(f'Train dataset class distribution: {train_dataset.get_class_distribution()}')
-    print_and_log(f'Valid dataset size: {len(valid_dataset)}')
-    print_and_log(f'Valid dataset class distribution: {valid_dataset.get_class_distribution()}')
+    if not k_fold_argument:
+        print_and_log(f'Train dataset size: {len(train_dataset)}')
+        print_and_log(f'Train dataset class distribution: {train_dataset.get_class_distribution()}')
+        print_and_log(f'Valid dataset size: {len(valid_dataset)}')
+        print_and_log(f'Valid dataset class distribution: {valid_dataset.get_class_distribution()}')
+    else:
+        print_and_log(f'Dataset size: {len(whole_dataset)}')
+        # get class distribution for the whole dataset, each split has one dictionary, so we need to merge them
+        class_distribution = {}
+        for dataset in [train_dataset, valid_dataset, test_dataset]:
+            for key, value in dataset.get_class_distribution().items():
+                if key in class_distribution:
+                    class_distribution[key] += value
+                else:
+                    class_distribution[key] = value
+        print_and_log(f'Dataset class distribution: {class_distribution}')
 
     # set the device to cuda if available, otherwise to cpu
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # choose the model based on the model_argument
     match model_argument:
-        case 'alexnet':
-            model = models.alexnet(weights=None)
         case 'mobilenet':
             model = models.mobilenet_v2(weights=None)
         case 'squeezenet':
@@ -414,7 +438,7 @@ def main():
     total_time = time.time()
 
     if k_fold_argument:
-        train_and_evaluate_k_fold(train_dataloader, valid_dataloader, model, criterion, optimizer, device,
+        train_and_evaluate_k_fold(whole_dataset, model, criterion, optimizer, device,
                                   num_epochs_argument, dataset_argument, model_argument, camera_view_argument,
                                   k_fold_argument)
     else:

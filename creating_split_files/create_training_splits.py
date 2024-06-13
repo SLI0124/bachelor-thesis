@@ -36,23 +36,29 @@ def process_dataset(dataset: str, split_ratio: int) -> None:
     print(f'Processing {dataset}')
 
     specific_folders = {
-        'pklot': ['puc_all.txt', 'ufpr04_all.txt', 'ufpr05_all.txt'],
-        'cnr': ['cnr_park_all.txt', 'cnr_park_ext_all.txt']
+        'pklot': ['all.txt', 'puc_all.txt', 'ufpr04_all.txt', 'ufpr05_all.txt', 'all_rainy.txt', 'all_sunny.txt',
+                  'all_cloudy.txt', 'puc_rainy.txt', 'puc_sunny.txt', 'puc_cloudy.txt', 'ufpr04_rainy.txt',
+                  'ufpr04_sunny.txt', 'ufpr04_cloudy.txt', 'ufpr05_rainy.txt', 'ufpr05_sunny.txt', 'ufpr05_cloudy.txt'],
+        'cnr': ['all.txt', 'cnr_park_all.txt', 'cnr_park_ext_all.txt', 'cnr_park_ext_sunny.txt',
+                'cnr_park_ext_rainy.txt', 'cnr_park_ext_cloudy.txt']
     }
 
+    # Process specific folders (e.g., cnr_park, cnr_park_ext)
     if dataset in specific_folders:
         for folder in specific_folders[dataset]:
-            prefix = '_'.join(folder.split('_')[:-1])  # get the prefix (e.g., cnr_park, cnr_park_ext)
+            prefix = folder.split('.')[0]
             with open(os.path.join(SPLIT_DIR, dataset, folder), 'r') as f:
                 images = f.readlines()
                 images = [image.strip() for image in images]
                 save_images_to_file(os.path.join(SPLIT_DIR, dataset), images, split_ratio, prefix)
 
-    # Process 'all.txt' for both 'pklot' and 'cnr'
+    # Process other datasets (e.g., acmps, acpds, spkl)
     with open(os.path.join(SPLIT_DIR, dataset, 'all.txt'), 'r') as f:
         images = f.readlines()
         images = [image.strip() for image in images]
         save_images_to_file(os.path.join(SPLIT_DIR, dataset), images, split_ratio, 'all')
+
+    print()
 
     print(f'Done processing {dataset}')
 
@@ -73,5 +79,5 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process split ratio.')
     parser.add_argument('--split_ratio', type=int, required=True, help='Split ratio for train and test datasets')
     args = parser.parse_args()
-    print(f'Split ratio: {args.split_ratio}')
+    print(f'Split ratio: {args.split_ratio}\n')
     main(args.split_ratio)

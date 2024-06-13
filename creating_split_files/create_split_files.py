@@ -72,6 +72,8 @@ def process_and_save_pklot(directory: str, dataset_name: str) -> None:
 
     save_images_to_file(split_directory, 'all.txt', all_images)
 
+    process_weather_pklot(dataset_name)
+
 
 def process_and_save_cnr(directory: str, dataset_name: str) -> None:
     cnr_ext_file = os.path.join(directory, 'CNR-EXT-Patches-150x150', 'LABELS', 'all.txt')
@@ -114,6 +116,62 @@ def process_and_save_cnr(directory: str, dataset_name: str) -> None:
 
     all_cnr_images = cnr_park_busy + cnr_park_free + formatted_lines
     save_images_to_file(split_directory, 'all.txt', all_cnr_images)
+
+    process_weather_cnr_ext(directory, dataset_name)
+
+
+def process_weather_cnr_ext(directory: str, dataset_name: str) -> None:
+    # desired directory: '../data/splits/cnr'
+    # cnr_ext_all_file = os.path.join(directory, 'cnr_park_ext_all.txt')
+    cnr_ext_all_file = os.path.join(SPLIT_DIR, dataset_name, 'cnr_park_ext_all.txt')
+    with open(cnr_ext_all_file, 'r') as f:
+        lines = f.readlines()
+
+    formatted_lines = [
+        str(os.path.join(directory, 'CNR-EXT-Patches-150x150', 'PATCHES', line.strip())).replace('\\', '/') for line in
+        lines
+    ]
+
+    # sample line: cnr/CNR-EXT-Patches-150x150/PATCHES/SUNNY/2015-11-22/camera2/S_2015-11-22_07.44_C02_187.jpg 0
+    # extract all sunny, rainy and overcast images
+    sunny_images = [line for line in formatted_lines if 'SUNNY' in line]
+    rainy_images = [line for line in formatted_lines if 'RAINY' in line]
+    cloudy_images = [line for line in formatted_lines if 'OVERCAST' in line]
+
+    # save the images to the respective files
+    split_directory = os.path.join(SPLIT_DIR, dataset_name)
+    save_images_to_file(split_directory, 'cnr_park_ext_sunny.txt', sunny_images)
+    save_images_to_file(split_directory, 'cnr_park_ext_rainy.txt', rainy_images)
+    save_images_to_file(split_directory, 'cnr_park_ext_cloudy.txt', cloudy_images)
+
+    print('Done processing CNR Park EXT weather images')
+
+
+def get_list_of_weather_images(directory: str) -> List[str]:
+    images = []
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.jpg'):
+                images.append(os.path.join(root, file))
+    return images
+
+
+def process_weather_pklot(dataset_name: str) -> None:
+    split_directory = os.path.join(SPLIT_DIR, dataset_name)
+    file_names = ['all', 'puc', 'ufpr04', 'ufpr05']
+    weather_types = ['Rainy', 'Sunny', 'Cloudy']
+
+    for file_name in file_names:
+        file_path = os.path.join(split_directory, f'{file_name}_all.txt')
+        with open(file_path, 'r') as f:
+            images = f.readlines()
+            images = [image.strip() for image in images]
+
+        for weather_type in weather_types:
+            filtered_images = [image for image in images if weather_type in image]
+            save_images_to_file(split_directory, f'{file_name.lower()}_{weather_type.lower()}.txt', filtered_images)
+
+    print('Done processing PKLot weather images')
 
 
 def main() -> None:
