@@ -29,24 +29,31 @@ PATH_TO_SPLIT_FILES = '../data/splits'
 PATH_TO_IMAGES = '../data/datasets'
 
 
-def print_and_log(message):
+def check_if_file_split_exists(file_path: str, name_of_split: str) -> None:
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(
+            f'The {name_of_split} split file {file_path} does not exist. Please make sure it exists, '
+            f'path is correct or make the split file via creating_split_files directory.')
+
+
+def print_and_log(message: str) -> None:
     print(message)
     logger.info(message)
 
 
-def calculate_metrics(labels, predictions):
+def calculate_metrics(labels: list[int], predictions: list[int]) -> tuple[float, float, float]:
     accuracy = accuracy_score(labels, predictions)
     f1 = f1_score(labels, predictions, average='weighted')
 
-    if len(np.unique(labels)) == 2:
+    if len(np.unique(labels)) == 2:  # since we are using binary classification, we need to check if there are 2 classes
         roc_auc = roc_auc_score(labels, predictions)
-    else:
+    else:  # if there are more than 2 classes, set roc_auc to None since it is not applicable
         roc_auc = None
 
     return accuracy, f1, roc_auc
 
 
-def train_model(model, dataloader, criterion, optimizer, device):
+def train_model(model, dataloader, criterion, optimizer, device) -> tuple[float, float, float, float]:
     model.train()
     running_loss, correct, total, train_acc, train_f1, train_roc_auc = 0.0, 0, 0, 0.0, 0.0, 0.0
     all_labels, all_predictions = [], []
@@ -75,7 +82,7 @@ def train_model(model, dataloader, criterion, optimizer, device):
     return running_loss / len(dataloader), train_acc, train_f1, train_roc_auc
 
 
-def validate_model(model, dataloader, criterion, device):
+def validate_model(model, dataloader, criterion, device) -> tuple[float, float, float, float]:
     model.eval()
     all_labels, all_predictions = [], []
     valid_loss = 0.0
@@ -101,7 +108,7 @@ def validate_model(model, dataloader, criterion, device):
 
 
 def train_and_evaluate(train_dataloader, valid_dataloader, model, criterion, optimizer, device, num_epochs,
-                       dataset_name, model_name, eighty_twenty_split, camera_view):
+                       dataset_name, model_name, split_ratio, camera_view) -> None:
     best_acc = 0.0
     epoch_time = time.time()
     train_losses, train_accuracies, train_f1s, train_roc_aucs = [], [], [], []
@@ -128,8 +135,8 @@ def train_and_evaluate(train_dataloader, valid_dataloader, model, criterion, opt
 
         if valid_acc > best_acc:
             best_acc = valid_acc
-            valid_split = 100 - eighty_twenty_split
-            save_path = (f'../data/models/{eighty_twenty_split}_{valid_split}_split/{dataset_name}/{camera_view}/'
+            valid_split = 100 - split_ratio
+            save_path = (f'../data/models/{split_ratio}_{valid_split}_split/{dataset_name}/{camera_view}/'
                          f'{num_epochs}_epochs/{model_name}.pth')
 
             if not os.path.exists(os.path.dirname(save_path)):
@@ -156,13 +163,14 @@ def train_and_evaluate(train_dataloader, valid_dataloader, model, criterion, opt
 
 
 def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_epochs,
-                              dataset_name, model_name, camera_view, k_fold_input):
-    def reset_weights(m):
+                              dataset_name, model_name, camera_view, k_fold_input) -> None:
+    def reset_weights(m) -> None:
         if hasattr(m, 'reset_parameters'):
             m.reset_parameters()
 
     results = {}
-    best_valid_acc = 0.0
+    best_valid_acc, best_valid_loss, best_valid_f1 = 0.0, 0.0, 0.0
+    best_valid_roc_auc, best_valid_epoch, best_valid_fold = 0.0, 0, 0
     k_fold = KFold(n_splits=k_fold_input, shuffle=True, random_state=42)
 
     torch.manual_seed(42)
@@ -193,6 +201,7 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
 
             valid_loss, valid_acc, valid_f1, valid_roc_auc = validate_model(model, valid_dataloader, criterion, device)
 
+            # initialize the results dictionary for the current epoch
             if epoch not in results:
                 results[epoch] = {
                     'train_loss': [],
@@ -205,6 +214,7 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
                     'valid_roc_auc': []
                 }
 
+            # append the results for the current epoch
             results[epoch]['train_loss'].append(train_loss)
             results[epoch]['train_acc'].append(train_acc)
             results[epoch]['train_f1'].append(train_f1)
@@ -214,8 +224,15 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
             results[epoch]['valid_f1'].append(valid_f1)
             results[epoch]['valid_roc_auc'].append(valid_roc_auc)
 
+            # save the best model based on the validation accuracy and all the other metrics
             if valid_acc > best_valid_acc:
                 best_valid_acc = valid_acc
+                best_valid_loss = valid_loss
+                best_valid_f1 = valid_f1
+                best_valid_roc_auc = valid_roc_auc
+                best_valid_epoch = epoch
+                best_valid_fold = fold
+
                 save_path = (f'../data/models/{k_fold_input}_fold/{dataset_name}/{camera_view}/'
                              f'{num_epochs}_epochs/{model_name}.pth')
 
@@ -233,6 +250,7 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
         print_and_log(f'Fold time: {fold_end_time - fold_start_time} seconds.')
         print_and_log('=' * 50)
 
+    # print the results for each epoch
     for epoch in results:
         print_and_log(f'Results for epoch {epoch + 1}/{num_epochs}')
 
@@ -248,6 +266,7 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
 
     print_and_log('=' * 50)
 
+    # print the final results, the average results for all epochs
     print_and_log(f'Final results for {k_fold_input}-fold cross-validation')
 
     print_and_log(f'Average Train Loss: {np.mean([np.mean(results[epoch]["train_loss"]) for epoch in results])}')
@@ -262,11 +281,21 @@ def train_and_evaluate_k_fold(dataset, model, criterion, optimizer, device, num_
 
     print_and_log('=' * 50)
 
+    # print the best results
+    print_and_log(f'Best scores for {k_fold_input}-fold cross-validation')
+
+    print_and_log(f'Best Fold: {best_valid_fold + 1}')
+    print_and_log(f'Best Epoch: {best_valid_epoch + 1}')
+
     print_and_log(f'Best Valid Accuracy: {best_valid_acc}')
+    print_and_log(f'Best Valid Loss: {best_valid_loss}')
+    print_and_log(f'Best Valid F1: {best_valid_f1}')
+    print_and_log(f'Best Valid ROC AUC: {best_valid_roc_auc}')
+
     print_and_log('=' * 50)
 
 
-def main():
+def main() -> None:
     # parsing the arguments for the script from the command line
     parser = argparse.ArgumentParser(description='Train a model on a dataset.')
 
@@ -280,7 +309,7 @@ def main():
                              'for ACPMS default and only option is all, '
                              'for SPKL default and only option is all.')
     parser.add_argument('--model', type=str, required=True,
-                        help='The model to use. Choose between alexnet, mobilenet, squeezenet and shufflenet.')
+                        help='The model to use. Choose between mobilenet, squeezenet and shufflenet.')
     parser.add_argument('--train_split', type=int,
                         help='The percentage of the dataset to use for training. The rest will be used for validating.')
     parser.add_argument('--num_epochs', type=int,
@@ -304,46 +333,7 @@ def main():
     if train_size_split_argument and k_fold_argument:
         raise ValueError('Please provide only one of the arguments, either train_split or k_fold.')
 
-    # print all the arguments
-    print_and_log(f'Dataset: {dataset_argument}')
-    print_and_log(f'Camera view: {camera_view_argument}')
-    print_and_log(f'Model: {model_argument}')
-    if k_fold_argument:
-        print_and_log(f'K-fold cross-validation with {k_fold_argument} folds.')
-    else:
-        print_and_log(f'Train size split: {train_size_split_argument}')
-        print_and_log(f'Valid size split: {100 - train_size_split_argument}')
-        print_and_log(f'Number of epochs: {num_epochs_argument}')
-    print_and_log('*' * 50)
-
-    # create the log file
-    if k_fold_argument:
-        log_file_name = (f'../data/logs/{k_fold_argument}_fold/'
-                         f'{dataset_argument}/{camera_view_argument}/{num_epochs_argument}_epochs/{model_argument}.txt')
-    else:
-        train_ratio = train_size_split_argument
-        valid_ratio = 100 - train_size_split_argument
-        log_file_name = (f'../data/logs/{train_ratio}_{valid_ratio}_split/'
-                         f'{dataset_argument}/{camera_view_argument}/{num_epochs_argument}_epochs/{model_argument}.txt')
-
-    # create the directories for the log file
-    if not os.path.exists(os.path.dirname(log_file_name)):
-        os.makedirs(os.path.dirname(log_file_name))
-
-    if os.path.exists(log_file_name):
-        print(f'Log file {log_file_name} already exists. Deleting it.')
-        os.remove(log_file_name)
-
-    # set the logger
-    logger.setLevel(logging.INFO)
-    file_handler = logging.FileHandler(log_file_name)
-    formatter = logging.Formatter('%(message)s')
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-
-    print(f'Logging to {log_file_name}')
-
-    # create the paths to the split files
+    # create the paths to the split files, also check if the split files exist
     test_split_file = None
     if k_fold_argument:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
@@ -352,15 +342,18 @@ def main():
                             f'_valid_80_20.txt')
         test_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                            f'_test_80_20.txt')
+
+        check_if_file_split_exists(test_split_file, 'test')
+        check_if_file_split_exists(train_split_file, 'train')
+        check_if_file_split_exists(valid_split_file, 'valid')
     else:
         train_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_train_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
         valid_split_file = (f'{PATH_TO_SPLIT_FILES}/{dataset_argument}/{camera_view_argument}'
                             f'_valid_{train_size_split_argument}_{100 - train_size_split_argument}.txt')
-    print_and_log(f'Train split file: {train_split_file}')
-    print_and_log(f'Validation split file: {valid_split_file}')
-    print_and_log(f'Test split file: {test_split_file}' if k_fold_argument else '')
-    print_and_log('*' * 50)
+
+        check_if_file_split_exists(train_split_file, 'train')
+        check_if_file_split_exists(valid_split_file, 'valid')
 
     # transformations for the dataset, different for training and validation
     transform_train = transforms.Compose([
@@ -388,29 +381,12 @@ def main():
     valid_dataloader = DataLoader(valid_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_OF_WORKERS,
                                   pin_memory=True)
 
+    # if k_fold is provided, create the whole dataset and the test datasets
     whole_dataset, test_dataset = None, None
     if k_fold_argument:
         test_dataset = SplitFileDataset.SplitFileDataset(test_split_file, PATH_TO_IMAGES, transform=transform_valid)
         whole_dataset = torch.utils.data.ConcatDataset([test_dataset, valid_dataset])
         whole_dataset = torch.utils.data.ConcatDataset([whole_dataset, train_dataset])
-
-    # print the number of samples in the train and validation dataset and the class distribution
-    if not k_fold_argument:
-        print_and_log(f'Train dataset size: {len(train_dataset)}')
-        print_and_log(f'Train dataset class distribution: {train_dataset.get_class_distribution()}')
-        print_and_log(f'Valid dataset size: {len(valid_dataset)}')
-        print_and_log(f'Valid dataset class distribution: {valid_dataset.get_class_distribution()}')
-    else:
-        print_and_log(f'Dataset size: {len(whole_dataset)}')
-        # get class distribution for the whole dataset, each split has one dictionary, so we need to merge them
-        class_distribution = {}
-        for dataset in [train_dataset, valid_dataset, test_dataset]:
-            for key, value in dataset.get_class_distribution().items():
-                if key in class_distribution:
-                    class_distribution[key] += value
-                else:
-                    class_distribution[key] = value
-        print_and_log(f'Dataset class distribution: {class_distribution}')
 
     # set the device to cuda if available, otherwise to cpu
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -431,6 +407,72 @@ def main():
     model.to(device)
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     criterion = nn.CrossEntropyLoss()
+
+    # create the log file
+    if k_fold_argument:
+        log_file_name = (f'../data/logs/{k_fold_argument}_fold/'
+                         f'{dataset_argument}/{camera_view_argument}/{num_epochs_argument}_epochs/{model_argument}.txt')
+    else:
+        train_ratio = train_size_split_argument
+        valid_ratio = 100 - train_size_split_argument
+        log_file_name = (f'../data/logs/{train_ratio}_{valid_ratio}_split/'
+                         f'{dataset_argument}/{camera_view_argument}/{num_epochs_argument}_epochs/{model_argument}.txt')
+
+    # create the directories for the log file
+    if not os.path.exists(os.path.dirname(log_file_name)):
+        os.makedirs(os.path.dirname(log_file_name))
+
+    # if the log file already exists, delete it
+    if os.path.exists(log_file_name):
+        print(f'Log file {log_file_name} already exists. Deleting it.')
+        os.remove(log_file_name)
+
+    # set the logger
+    logger.setLevel(logging.INFO)
+    file_handler = logging.FileHandler(log_file_name)
+    formatter = logging.Formatter('%(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    print(f'Logging to {log_file_name}')
+
+    # print all the arguments
+    print_and_log(f'Dataset: {dataset_argument}')
+    print_and_log(f'Camera view: {camera_view_argument}')
+    print_and_log(f'Model: {model_argument}')
+    if k_fold_argument:  # if k_fold is provided, print the number of folds
+        print_and_log(f'K-fold cross-validation with {k_fold_argument} folds.')
+    else:  # if not, print the train size split and the number of epochs
+        print_and_log(f'Train size split: {train_size_split_argument}')
+        print_and_log(f'Valid size split: {100 - train_size_split_argument}')
+        print_and_log(f'Number of epochs: {num_epochs_argument}')
+
+    print_and_log('*' * 50)
+
+    print_and_log(f'Train split file: {train_split_file}')
+    print_and_log(f'Validation split file: {valid_split_file}')
+    print_and_log(f'Test split file: {test_split_file}' if k_fold_argument else '')
+    print_and_log('*' * 50)
+
+    # print the number of samples in the train and validation dataset and the class distribution
+    if not k_fold_argument:
+        print_and_log(f'Train dataset size: {len(train_dataset)}')
+        print_and_log(f'Train dataset class distribution: {train_dataset.get_class_distribution()}')
+        print_and_log(f'Valid dataset size: {len(valid_dataset)}')
+        print_and_log(f'Valid dataset class distribution: {valid_dataset.get_class_distribution()}')
+    else:
+        print_and_log(f'Dataset size: {len(whole_dataset)}')
+        # get class distribution for the whole dataset, each split has one dictionary, so we need to merge them
+        # not so elegant, but it works as intended,
+        # later I could use one split with the whole dataset and get the class distribution from that
+        class_distribution = {}
+        for dataset in [train_dataset, valid_dataset, test_dataset]:
+            for key, value in dataset.get_class_distribution().items():
+                if key in class_distribution:
+                    class_distribution[key] += value
+                else:
+                    class_distribution[key] = value
+        print_and_log(f'Dataset class distribution: {class_distribution}')
 
     # train the model
     print_and_log('Training the model...')
