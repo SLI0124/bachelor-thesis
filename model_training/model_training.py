@@ -302,9 +302,13 @@ def main() -> None:
     parser.add_argument('--dataset', type=str, required=True,
                         help='The dataset to use. Choose between pklot, cnr, acmps, acpds, spkl')
     parser.add_argument('--camera_view', type=str, required=True,
-                        help='For the PKLot dataset, choose between puc, ufpr04, ufpr05, and all, '
+                        help='For the PKLot dataset, choose between all, all_cloudy, all_sunny, all_rainy, '
+                             'puc, puc_cloudy, puc_sunny, puc_rainy,'
+                             'ufpr04_cloudy, ufpr04_sunny, ufpr04_rainy,'
+                             'ufpr05_cloudy, ufpr05_sunny, ufpr05_rainy,'
                              'for CNRPark choose between cnr_park (camera A and B), cnr_park_ext'
-                             ' (camera 0-9) and all (all cameras), '
+                             ' (camera 0-9), all (all cameras - cnr_park and cnr_park_ext),'
+                             'cnr_park_ext_cloudy, cnr_park_ext_sunny, cnr_park_ext_rainy,'
                              'for ACPDS default and only option is all, '
                              'for ACPMS default and only option is all, '
                              'for SPKL default and only option is all.')
@@ -332,6 +336,18 @@ def main() -> None:
     # if both are provided, raise exception as well
     if train_size_split_argument and k_fold_argument:
         raise ValueError('Please provide only one of the arguments, either train_split or k_fold.')
+
+    # check if the train_size_split_argument is between 1 and 99, if not raise exception
+    if train_size_split_argument:
+        if not 1 <= train_size_split_argument <= 99:
+            raise ValueError('Train split should be between 1 and 99. Please provide a valid value. Usual values are '
+                             'ranges between 50 and 90. Also check if you\'ve created the split files in the '
+                             'creating_split_files directory.')
+    # Check if the k_fold_argument is at least 2, if not raise exception
+    if k_fold_argument:
+        if not 2 <= k_fold_argument:
+            raise ValueError(
+                'K-fold should be at least 2. Please provide a valid value. Usual values are between 5 and 10.')
 
     # create the paths to the split files, also check if the split files exist
     test_split_file = None
@@ -372,7 +388,7 @@ def main() -> None:
                              std=NORMALIZE_STD)
     ])
 
-    # create the dataset and dataloader
+    # create the dataset and dataloader, based on the split files, transformations and other arguments
     train_dataset = SplitFileDataset.SplitFileDataset(train_split_file, PATH_TO_IMAGES, transform=transform_train)
     valid_dataset = SplitFileDataset.SplitFileDataset(valid_split_file, PATH_TO_IMAGES, transform=transform_valid)
 
@@ -400,8 +416,7 @@ def main() -> None:
         case 'shufflenet':
             model = models.shufflenet_v2_x0_5(weights=None)
         case _:
-            raise ValueError(
-                'Invalid model. Please choose between alexnet, mobilenet, squeezenet, shufflenet.')
+            raise ValueError('Invalid model. Please choose between alexnet, mobilenet, squeezenet, shufflenet.')
 
     # setting the model to the device, setting the optimizer and the criterion
     model.to(device)
@@ -436,7 +451,7 @@ def main() -> None:
 
     print(f'Logging to {log_file_name}')
 
-    # print all the arguments
+    # print all the arguments, paths and other information
     print_and_log(f'Dataset: {dataset_argument}')
     print_and_log(f'Camera view: {camera_view_argument}')
     print_and_log(f'Model: {model_argument}')
@@ -463,8 +478,7 @@ def main() -> None:
     else:
         print_and_log(f'Dataset size: {len(whole_dataset)}')
         # get class distribution for the whole dataset, each split has one dictionary, so we need to merge them
-        # not so elegant, but it works as intended,
-        # later I could use one split with the whole dataset and get the class distribution from that
+        # not so elegant, but it works as intended, could be improved in the future
         class_distribution = {}
         for dataset in [train_dataset, valid_dataset, test_dataset]:
             for key, value in dataset.get_class_distribution().items():
