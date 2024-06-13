@@ -10,55 +10,54 @@
     - `spkl`
 
 - `--camera_view`:
-    - pro dataset PKLot vyberte mezi `puc`, `ufpr04`, `ufpr05` a `all`
-    - pro CNRPark vyberte mezi `cnrpark` (kamera A a B), `cnrpark_ext` (kamera 0-9 a cnrpark) a `all`
+    - pro PKLot vyberte mezi:
+        - `all`, `all_cloudy`, `all_sunny`, `all_rainy`,
+        - `puc`, `puc_cloudy`, `puc_sunny`, `puc_rainy`,
+        - `ufpr04_cloudy`, `ufpr04_sunny`, `ufpr04_rainy`,
+        - `ufpr05_cloudy`, `ufpr05_sunny`, `ufpr05_rainy`
+    - pro CNRPark vyberte mezi:
+        - `cnr_park` (camera A a B), `cnr_park_ext` (camera 0-9), `all` (cnr_park a cnr_park_ext),
+        - `cnr_park_ext_cloudy`, `cnr_park_ext_sunny`, `cnr_park_ext_rainy`
     - pro ACPDS vyberte `all`
     - pro ACPMS vyberte `all`
     - pro SPKL vyberte `all`
 
 - `--model`: Název modelu, který chcete použít. Vyberte mezi:
-    - `alexnet`
     - `mobilenet`
     - `squeezenet`
     - `shufflenet`
 
-- `--train_split`: Procento datasetu, které chcete použít pro trénování. Zbytek bude použit pro testování. Výchozí
-  hodnota je 80. Pokud byste chtěli použít jiné procento, spustě [skript](../utils/split_datasets.py) pro rozdělení
-  datasetu.
+- `--train_split`: Procento datasetu, které chcete použít pro trénování. Zbytek bude použit pro testování. Dvě základní
+  možnosti, které jsou nastaveny výchozí hodnotou:
     - 80 - 80% trénovacích dat, 20% testovacích dat
     - 50 - 50% trénovacích dat, 50% testovacích dat
+
+  Pokud byste chtěli použít jiné procento, spustě [skript](../creating_split_files/create_training_splits.py) s
+  vašim vlastním parametrem `--split_ratio`.
+  ```bash
+  cd ../create_training_splits
+  python3 create_training_splits.py --split_ratio 70
+  ```
 
 ## Příklad použití
 
 ```bash
-python model_training.py --dataset pklot --camera_view puc --model alexnet --train_split 80
-python model_training.py --dataset pklot --camera_view ufpr04 --model mobilenet --train_split 50
-python model_training.py --dataset pklot --camera_view ufpr05 --model squeezenet --train_split 80
-python model_training.py --dataset pklot --camera_view all --model shufflenet --train_split 80
+python3 model_training.py --dataset acpds --camera_view all --model mobilenet --train_split 80
 ```
 
 ```bash
-python model_training.py --dataset cnrpark --camera_view cnrpark --model alexnet --train_split 80
-python model_training.py --dataset cnrpark --camera_view cnrparkext --model mobilenet --train_split 50
-python model_training.py --dataset cnrpark --camera_view all --model squeezenet --train_split 80
+python3 model_training.py --dataset cnr --camera_view cnr_park_ext_sunny --model mobilenet --k_fold 5 --num_epochs 5; 
 ```
 
 ```bash
-python model_training.py --dataset acmps --camera_view all --model mobilenet --train_split 50
-```
-
-```bash
-python model_training.py --dataset acpds --camera_view all --model shufflenet --train_split 80
-```
-
-```bash
-python model_training.py --dataset spkl --camera_view all --model alexnet --train_split 50
+python model_training.py --dataset pklot --camera_view all_rainy --model mobilenet --k_fold 5 --num_epochs 5; 
 ```
 
 ## Výstup
 
-- Výstupe je logovací soubor, který obsahuje informace o průběhu trénování modelu.
-- Model je uložen v adresáři `../data/models/{dataset_name}/{camera_view}/{model_name}/{train_split}/best_model.pth`
+- Výstupem je logovací soubor, který obsahuje informace o průběhu trénování modelu. Všechny logy jsou uloženy v
+  této [složce](../data/logs), kde jsou rozděleny podle datasetu, pohledu kamery, modelu a trénovacího dělení.
+- Model je uložen podobně jako logy, ale v [složce](../data/models).
 - Výstupní soubor obsahuje informace o trénování modelu, jako je ztráta, přesnost, matice záměn a další.
 
 Pokud chcete vizualizovat více metrik, jako je ztráta, přesnost, matice záměn atd., můžete nakouknot do složky a jejího
