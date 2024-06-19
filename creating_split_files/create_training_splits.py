@@ -63,7 +63,7 @@ def process_dataset(dataset: str, split_ratio: int) -> None:
     print(f'Done processing {dataset}')
 
 
-def main(split_ratio: int):
+def main(split_ratio: int) -> None:
     datasets = os.listdir(SPLIT_DIR)
 
     for dataset in datasets:
