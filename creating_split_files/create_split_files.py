@@ -101,12 +101,8 @@ def process_and_save_cnr(directory: str, dataset_name: str) -> None:
             ]
             formatted_images = ['/'.join(image.split('/')[3:]) for image in formatted_images]
             if status == 'busy':
-                # cnr_park_busy.extend(formatted_images)
-                # add the path and label to the list
                 cnr_park_busy.extend([f'{image} 1' for image in formatted_images])
             else:
-                # cnr_park_free.extend(formatted_images)
-                # add the path and label to the list
                 cnr_park_free.extend([f'{image} 0' for image in formatted_images])
 
     random.shuffle(cnr_park_busy)
@@ -121,8 +117,6 @@ def process_and_save_cnr(directory: str, dataset_name: str) -> None:
 
 
 def process_weather_cnr_ext(directory: str, dataset_name: str) -> None:
-    # desired directory: '../data/splits/cnr'
-    # cnr_ext_all_file = os.path.join(directory, 'cnr_park_ext_all.txt')
     cnr_ext_all_file = os.path.join(SPLIT_DIR, dataset_name, 'cnr_park_ext_all.txt')
     with open(cnr_ext_all_file, 'r') as f:
         lines = f.readlines()
@@ -132,13 +126,10 @@ def process_weather_cnr_ext(directory: str, dataset_name: str) -> None:
         lines
     ]
 
-    # sample line: cnr/CNR-EXT-Patches-150x150/PATCHES/SUNNY/2015-11-22/camera2/S_2015-11-22_07.44_C02_187.jpg 0
-    # extract all sunny, rainy and overcast images
-    sunny_images = [line for line in formatted_lines if 'SUNNY' in line]
-    rainy_images = [line for line in formatted_lines if 'RAINY' in line]
-    cloudy_images = [line for line in formatted_lines if 'OVERCAST' in line]
+    sunny_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'SUNNY' in line]
+    rainy_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'RAINY' in line]
+    cloudy_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'OVERCAST' in line]
 
-    # save the images to the respective files
     split_directory = os.path.join(SPLIT_DIR, dataset_name)
     save_images_to_file(split_directory, 'cnr_park_ext_sunny.txt', sunny_images)
     save_images_to_file(split_directory, 'cnr_park_ext_rainy.txt', rainy_images)
