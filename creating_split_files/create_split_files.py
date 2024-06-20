@@ -126,9 +126,9 @@ def process_weather_cnr_ext(directory: str, dataset_name: str) -> None:
         lines
     ]
 
-    sunny_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'SUNNY' in line]
-    rainy_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'RAINY' in line]
-    cloudy_images = [line.replace('../data/datasets/', '', 1) for line in formatted_lines if 'OVERCAST' in line]
+    sunny_images = ['/'.join(line.split('/')[6:]) for line in formatted_lines if 'SUNNY' in line]
+    rainy_images = ['/'.join(line.split('/')[6:]) for line in formatted_lines if 'RAINY' in line]
+    cloudy_images = ['/'.join(line.split('/')[6:]) for line in formatted_lines if 'OVERCAST' in line]
 
     split_directory = os.path.join(SPLIT_DIR, dataset_name)
     save_images_to_file(split_directory, 'cnr_park_ext_sunny.txt', sunny_images)
@@ -153,7 +153,10 @@ def process_weather_pklot(dataset_name: str) -> None:
     weather_types = ['Rainy', 'Sunny', 'Cloudy']
 
     for file_name in file_names:
-        file_path = os.path.join(split_directory, f'{file_name}_all.txt')
+        if file_name == 'all':
+            file_path = os.path.join(split_directory, 'all.txt')
+        else:
+            file_path = os.path.join(split_directory, f'{file_name}_all.txt')
         with open(file_path, 'r') as f:
             images = f.readlines()
             images = [image.strip() for image in images]
