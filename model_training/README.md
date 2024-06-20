@@ -39,6 +39,12 @@
   python3 create_training_splits.py --split_ratio 70
   ```
 
+- `--k_fold`: Počet složek pro křížovou validaci. Výchozí hodnota je 5.
+- `--num_epochs`: Počet epoch pro trénování modelu. Výchozí hodnota je 10.
+
+Nejde použít `--k_fold` a `--train_split` zároveň. Pokud chcete použít křížovou validaci, nastavte `--k_fold` na
+požadovaný počet složek. Pokud chcete použít trénovací dělení, nastavte `--train_split` na požadované procento.
+
 ## Příklad použití
 
 ```bash
