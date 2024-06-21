@@ -1,0 +1,112 @@
+Dataset: pklot
+Camera view: ufpr05_cloudy
+Model: mobilenet
+Train size split: 80
+Valid size split: 20
+Number of epochs: 5
+**************************************************
+Train split file: ../data/splits/pklot/ufpr05_cloudy_train_80_20.txt
+Validation split file: ../data/splits/pklot/ufpr05_cloudy_valid_80_20.txt
+
+**************************************************
+Train dataset size: 45572
+Train dataset class distribution: {'empty': 18630, 'occupied': 26942}
+Valid dataset size: 5697
+Valid dataset class distribution: {'empty': 2254, 'occupied': 3443}
+Training the model...
+**************************************************
+Epoch 1/5
+Batch [100/713], Train Loss: 0.010474984534084797, Train Acc: 0.97640625, Train F1: 0.9813352390533816, Train ROC AUC: 0.9761829649047693
+Batch [200/713], Train Loss: 0.000644530460704118, Train Acc: 0.98484375, Train F1: 0.987322661147185, Train ROC AUC: 0.9846745169447131
+Batch [300/713], Train Loss: 0.0013732698280364275, Train Acc: 0.9890104166666667, Train F1: 0.9906666253852141, Train ROC AUC: 0.988861095706446
+Batch [400/713], Train Loss: 0.003518739016726613, Train Acc: 0.9906640625, Train F1: 0.991907281853996, Train ROC AUC: 0.990485890005498
+Batch [500/713], Train Loss: 0.0026283585466444492, Train Acc: 0.99215625, Train F1: 0.9931517075087497, Train ROC AUC: 0.9919908069830153
+Batch [600/713], Train Loss: 0.0006184089579619467, Train Acc: 0.9930208333333334, Train F1: 0.9938508917978269, Train ROC AUC: 0.992873652370848
+Batch [700/713], Train Loss: 0.01862323470413685, Train Acc: 0.9936160714285714, Train F1: 0.9943277720611629, Train ROC AUC: 0.993475426527368
+--------------------------------------------------
+Train Loss: 0.046454808543958954, Train Acc: 0.9937022733257264, Train F1: 0.9944019265750806, Train ROC AUC: 0.9935596647385472
+Valid Loss: 0.009356125773734271, Valid Acc: 0.9977180972441636, Valid F1: 0.9977181845673136, Valid ROC AUC: 0.997652477500869
+Confusion Matrix for the validation set:
+ [[2248    6]
+ [   7 3436]]
+Saved the new best model to ../data/models/80_20_split/pklot/ufpr05_cloudy/5_epochs/mobilenet.pth with accuracy 0.9977180972441636
+Epoch time: 175.094300031662 seconds.
+==================================================
+Epoch 2/5
+Batch [100/713], Train Loss: 0.0002965675375889987, Train Acc: 0.99734375, Train F1: 0.9973436732916804, Train ROC AUC: 0.997227225845814
+Batch [200/713], Train Loss: 0.00025980747886933386, Train Acc: 0.9978125, Train F1: 0.9978125624077336, Train ROC AUC: 0.9977702816171593
+Batch [300/713], Train Loss: 0.0037814215756952763, Train Acc: 0.9977604166666667, Train F1: 0.9977604837594299, Train ROC AUC: 0.9977107575031131
+Batch [400/713], Train Loss: 0.0005440255627036095, Train Acc: 0.997578125, Train F1: 0.9975782345688975, Train ROC AUC: 0.9975360929038848
+Batch [500/713], Train Loss: 0.00043693158659152687, Train Acc: 0.9976875, Train F1: 0.9976875557525294, Train ROC AUC: 0.9976284676055457
+Batch [600/713], Train Loss: 0.010572153143584728, Train Acc: 0.9977083333333333, Train F1: 0.9977084245399379, Train ROC AUC: 0.9976672054700091
+Batch [700/713], Train Loss: 0.007551735267043114, Train Acc: 0.9977232142857143, Train F1: 0.9977233106815424, Train ROC AUC: 0.997686248107259
+--------------------------------------------------
+Train Loss: 0.00841344844502218, Train Acc: 0.9977398402527868, Train F1: 0.9977399243693771, Train ROC AUC: 0.9976993241241507
+Valid Loss: 0.006244727726688224, Valid Acc: 0.9989468141126909, Valid F1: 0.9989470548209728, Valid ROC AUC: 0.9991286668602963
+Confusion Matrix for the validation set:
+ [[2254    0]
+ [   6 3437]]
+Saved the new best model to ../data/models/80_20_split/pklot/ufpr05_cloudy/5_epochs/mobilenet.pth with accuracy 0.9989468141126909
+Epoch time: 178.23546648025513 seconds.
+==================================================
+Epoch 3/5
+Batch [100/713], Train Loss: 0.00025861378526315093, Train Acc: 0.999375, Train F1: 0.9993750324009189, Train ROC AUC: 0.999410129250088
+Batch [200/713], Train Loss: 0.00036966553307138383, Train Acc: 0.999140625, Train F1: 0.9991406627988236, Train ROC AUC: 0.9991553226463993
+Batch [300/713], Train Loss: 0.0010231995256617665, Train Acc: 0.9989583333333333, Train F1: 0.9989583753301889, Train ROC AUC: 0.998960961276665
+Batch [400/713], Train Loss: 0.03281138092279434, Train Acc: 0.998515625, Train F1: 0.9985156693680054, Train ROC AUC: 0.9984929850078152
+Batch [500/713], Train Loss: 0.0005526725435629487, Train Acc: 0.99828125, Train F1: 0.9982813004123358, Train ROC AUC: 0.9982519344193311
+Batch [600/713], Train Loss: 0.0012421210994943976, Train Acc: 0.9981510416666667, Train F1: 0.9981511421310465, Train ROC AUC: 0.9981409719919361
+Batch [700/713], Train Loss: 0.005189832765609026, Train Acc: 0.998125, Train F1: 0.9981250629623797, Train ROC AUC: 0.9980943734263228
+--------------------------------------------------
+Train Loss: 0.006933758110582301, Train Acc: 0.9981348196260862, Train F1: 0.9981348736306764, Train ROC AUC: 0.9980996154320171
+Valid Loss: 0.0055198636579777685, Valid Acc: 0.9985957521502545, Valid F1: 0.998596179287603, Valid ROC AUC: 0.998838222480395
+Confusion Matrix for the validation set:
+ [[2254    0]
+ [   8 3435]]
+Epoch time: 178.74463963508606 seconds.
+==================================================
+Epoch 4/5
+Batch [100/713], Train Loss: 0.0013278871774673462, Train Acc: 0.99859375, Train F1: 0.9985937891779625, Train ROC AUC: 0.9985781857880192
+Batch [200/713], Train Loss: 0.008279731497168541, Train Acc: 0.998046875, Train F1: 0.9980470104477129, Train ROC AUC: 0.9980563791592512
+Batch [300/713], Train Loss: 7.112145249266177e-05, Train Acc: 0.9983333333333333, Train F1: 0.9983334332224149, Train ROC AUC: 0.998333967107647
+Batch [400/713], Train Loss: 0.0003428029885981232, Train Acc: 0.9984375, Train F1: 0.9984375925191106, Train ROC AUC: 0.9984424124628831
+Batch [500/713], Train Loss: 4.1049683204619214e-05, Train Acc: 0.99859375, Train F1: 0.9985938238888326, Train ROC AUC: 0.9985987498953206
+Batch [600/713], Train Loss: 0.0004939959035255015, Train Acc: 0.99859375, Train F1: 0.9985937916209372, Train ROC AUC: 0.9985745220907674
+Batch [700/713], Train Loss: 0.0004987227730453014, Train Acc: 0.9986607142857142, Train F1: 0.998660725614585, Train ROC AUC: 0.9986226809063913
+--------------------------------------------------
+Train Loss: 0.005179613934442348, Train Acc: 0.9986395154919687, Train F1: 0.998639538010135, Train ROC AUC: 0.9986092587591889
+Valid Loss: 0.006641438811948319, Valid Acc: 0.9987712831314727, Valid F1: 0.9987714239329358, Valid ROC AUC: 0.998830233327088
+Confusion Matrix for the validation set:
+ [[2252    2]
+ [   5 3438]]
+Epoch time: 180.24367427825928 seconds.
+==================================================
+Epoch 5/5
+Batch [100/713], Train Loss: 0.0001251823123311624, Train Acc: 0.99875, Train F1: 0.99875, Train ROC AUC: 0.9987148799532217
+Batch [200/713], Train Loss: 0.0008563961018808186, Train Acc: 0.99890625, Train F1: 0.99890625, Train ROC AUC: 0.9988724549193383
+Batch [300/713], Train Loss: 7.491089490940794e-05, Train Acc: 0.9986979166666666, Train F1: 0.998697929021987, Train ROC AUC: 0.998665510842987
+Batch [400/713], Train Loss: 4.898590486845933e-05, Train Acc: 0.99875, Train F1: 0.99875, Train ROC AUC: 0.9987093360179145
+Batch [500/713], Train Loss: 0.00022593291942030191, Train Acc: 0.99834375, Train F1: 0.9983437402055005, Train ROC AUC: 0.9982805304803709
+Batch [600/713], Train Loss: 0.00021557530271820724, Train Acc: 0.9982291666666666, Train F1: 0.9982291493713776, Train ROC AUC: 0.9981592164754508
+Batch [700/713], Train Loss: 0.0001078764398698695, Train Acc: 0.9980803571428571, Train F1: 0.9980803732201917, Train ROC AUC: 0.9980233629723613
+--------------------------------------------------
+Train Loss: 0.007370918950171466, Train Acc: 0.9980689897305363, Train F1: 0.9980690216918044, Train ROC AUC: 0.9980191001341104
+Valid Loss: 0.00699005201173956, Valid Acc: 0.9985957521502545, Valid F1: 0.998596179287603, Valid ROC AUC: 0.998838222480395
+Confusion Matrix for the validation set:
+ [[2254    0]
+ [   8 3435]]
+Epoch time: 185.0130467414856 seconds.
+==================================================
+Average Train Loss: 0.014870509596835451
+Average Train Accuracy: 0.997257087685421
+Average Train F1: 0.9973970568554147
+Average Train ROC AUC: 0.9971973926376029
+
+Best Validation Accuracy: 0.9989468141126909
+
+Average Valid Loss: 0.006950441596417628
+Average Valid Accuracy: 0.9985255397577673
+Average Valid F1: 0.9985258043792857
+Average Valid ROC AUC: 0.9986575645298087
+
+Total training time: 897.3331019878387 seconds.
