@@ -1,0 +1,83 @@
+Dataset: pklot
+Camera view: ufpr05_rainy
+Model: squeezenet
+Train size split: 80
+Valid size split: 20
+Number of epochs: 5
+**************************************************
+Train split file: ../data/splits/pklot/ufpr05_rainy_train_80_20.txt
+Validation split file: ../data/splits/pklot/ufpr05_rainy_valid_80_20.txt
+
+**************************************************
+Train dataset size: 7143
+Train dataset class distribution: {'empty': 2281, 'occupied': 4862}
+Valid dataset size: 893
+Valid dataset class distribution: {'empty': 287, 'occupied': 606}
+Training the model...
+**************************************************
+Epoch 1/5
+Batch [100/112], Train Loss: 0.3839176297187805, Train Acc: 0.70484375, Train F1: 0.6585514136583067, Train ROC AUC: 0.5818689347924346
+--------------------------------------------------
+Train Loss: 0.7912984140483397, Train Acc: 0.7239255214895702, Train F1: 0.6864176658845869, Train ROC AUC: 0.610277098150064
+Valid Loss: 0.44489983894995283, Valid Acc: 0.8185890257558791, Valid F1: 0.793617809381304, Valid ROC AUC: 0.7177700348432056
+Confusion Matrix for the validation set:
+ [[125 162]
+ [  0 606]]
+Saved the new best model to ../data/models/80_20_split/pklot/ufpr05_rainy/5_epochs/squeezenet.pth with accuracy 0.8185890257558791
+Epoch time: 49.25482153892517 seconds.
+==================================================
+Epoch 2/5
+Batch [100/112], Train Loss: 0.0650993064045906, Train Acc: 0.95375, Train F1: 0.9534496273880819, Train ROC AUC: 0.9405191508284292
+--------------------------------------------------
+Train Loss: 0.115000947711191, Train Acc: 0.9564608707825843, Train F1: 0.9562085190790824, Train ROC AUC: 0.9443954323006337
+Valid Loss: 0.07075619724180017, Valid Acc: 0.961926091825308, Valid F1: 0.9613360896073053, Valid ROC AUC: 0.9426007060636377
+Confusion Matrix for the validation set:
+ [[255  32]
+ [  2 604]]
+Saved the new best model to ../data/models/80_20_split/pklot/ufpr05_rainy/5_epochs/squeezenet.pth with accuracy 0.961926091825308
+Epoch time: 47.27273344993591 seconds.
+==================================================
+Epoch 3/5
+Batch [100/112], Train Loss: 0.009697447530925274, Train Acc: 0.9846875, Train F1: 0.9846671459828943, Train ROC AUC: 0.9810241165040626
+--------------------------------------------------
+Train Loss: 0.040198217246922595, Train Acc: 0.9844603107937842, Train F1: 0.9844411225348549, Train ROC AUC: 0.9809049358975862
+Valid Loss: 0.1642535049468279, Valid Acc: 0.9384098544232923, Valid F1: 0.9364832100894878, Valid ROC AUC: 0.9041811846689896
+Confusion Matrix for the validation set:
+ [[232  55]
+ [  0 606]]
+Epoch time: 47.75121092796326 seconds.
+==================================================
+Epoch 4/5
+Batch [100/112], Train Loss: 0.005003984551876783, Train Acc: 0.986875, Train F1: 0.9868680835722204, Train ROC AUC: 0.9843449822831265
+--------------------------------------------------
+Train Loss: 0.034372031429614126, Train Acc: 0.9872602547949041, Train F1: 0.9872535535013629, Train ROC AUC: 0.9848235229195592
+Valid Loss: 0.03641987192219988, Valid Acc: 0.9876819708846585, Valid F1: 0.9876413012658494, Valid ROC AUC: 0.9826703924747875
+Confusion Matrix for the validation set:
+ [[278   9]
+ [  2 604]]
+Saved the new best model to ../data/models/80_20_split/pklot/ufpr05_rainy/5_epochs/squeezenet.pth with accuracy 0.9876819708846585
+Epoch time: 47.277506828308105 seconds.
+==================================================
+Epoch 5/5
+Batch [100/112], Train Loss: 0.0037537268362939358, Train Acc: 0.98671875, Train F1: 0.9867144269668685, Train ROC AUC: 0.9844008039836183
+--------------------------------------------------
+Train Loss: 0.043830619958043826, Train Acc: 0.9860002799944001, Train F1: 0.9859953780263837, Train ROC AUC: 0.983548886577744
+Valid Loss: 0.052989077887364795, Valid Acc: 0.986562150055991, Valid F1: 0.9866325497135475, Valid ROC AUC: 0.9900990099009901
+Confusion Matrix for the validation set:
+ [[287   0]
+ [ 12 594]]
+Epoch time: 47.428916931152344 seconds.
+==================================================
+Average Train Loss: 0.2049400460788222
+Average Train Accuracy: 0.9276214475710486
+Average Train F1: 0.9200632478052542
+Average Train ROC AUC: 0.9007899751691173
+
+Best Validation Accuracy: 0.9876819708846585
+
+Average Valid Loss: 0.15386369818962914
+Average Valid Accuracy: 0.9386338185890258
+Average Valid F1: 0.933142192011499
+Average Valid ROC AUC: 0.907464265590322
+
+Total training time: 238.98618865013123 seconds.
