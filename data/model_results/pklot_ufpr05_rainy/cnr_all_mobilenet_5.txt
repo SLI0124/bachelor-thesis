@@ -1,0 +1,16 @@
+Train Model: mobilenet
+Train Dataset: cnr
+Train View: all
+Train Epochs: 5
+Test Dataset: pklot
+Test View: ufpr05_rainy
+Accuracy: 0.8208286674132139
+F1: 0.8802395209580839
+ROC AUC: 0.738150958697793
+True Positives: 588
+False Positives: 138
+True Negatives: 145
+False Negatives: 22
+Confusion Matrix:
+[[145 138]
+ [ 22 588]]

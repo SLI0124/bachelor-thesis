@@ -1,0 +1,16 @@
+Train Model: shufflenet
+Train Dataset: acpds
+Train View: all
+Train Epochs: 5
+Test Dataset: spkl
+Test View: all
+Accuracy: 0.5839793281653747
+F1: 0.6599070553443177
+ROC AUC: 0.6799455277970791
+True Positives: 781
+False Positives: 63
+True Negatives: 349
+False Negatives: 742
+Confusion Matrix:
+[[349  63]
+ [742 781]]

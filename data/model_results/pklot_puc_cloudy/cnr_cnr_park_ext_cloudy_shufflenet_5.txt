@@ -1,0 +1,16 @@
+Train Model: shufflenet
+Train Dataset: cnr
+Train View: cnr_park_ext_cloudy
+Train Epochs: 5
+Test Dataset: pklot
+Test View: puc_cloudy
+Accuracy: 0.8007230004518753
+F1: 0.7603260869565217
+ROC AUC: 0.8531959642794295
+True Positives: 4197
+False Positives: 2632
+True Negatives: 6435
+False Negatives: 14
+Confusion Matrix:
+[[6435 2632]
+ [  14 4197]]

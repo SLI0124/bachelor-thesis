@@ -1,0 +1,16 @@
+Train Model: squeezenet
+Train Dataset: cnr
+Train View: cnr_park_ext_sunny
+Train Epochs: 5
+Test Dataset: acpds
+Test View: all
+Accuracy: 0.5097864768683275
+F1: 0.09523809523809523
+ROC AUC: 0.5010103793515202
+True Positives: 29
+False Positives: 29
+True Negatives: 544
+False Negatives: 522
+Confusion Matrix:
+[[544  29]
+ [522  29]]

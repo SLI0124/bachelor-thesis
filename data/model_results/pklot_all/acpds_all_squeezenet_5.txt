@@ -1,0 +1,16 @@
+Train Model: squeezenet
+Train Dataset: acpds
+Train View: all
+Train Epochs: 5
+Test Dataset: pklot
+Test View: all
+Accuracy: 0.6236599315954359
+F1: 0.4201576476839961
+ROC AUC: 0.6128632288510576
+True Positives: 9488
+False Positives: 2018
+True Negatives: 33910
+False Negatives: 24170
+Confusion Matrix:
+[[33910  2018]
+ [24170  9488]]

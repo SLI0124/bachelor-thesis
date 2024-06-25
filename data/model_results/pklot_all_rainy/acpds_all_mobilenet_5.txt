@@ -1,0 +1,16 @@
+Train Model: mobilenet
+Train Dataset: acpds
+Train View: all
+Train Epochs: 5
+Test Dataset: pklot
+Test View: all_rainy
+Accuracy: 0.8311155577788895
+F1: 0.8585790884718498
+ROC AUC: 0.8383337452778121
+True Positives: 5124
+False Positives: 494
+True Negatives: 3183
+False Negatives: 1194
+Confusion Matrix:
+[[3183  494]
+ [1194 5124]]

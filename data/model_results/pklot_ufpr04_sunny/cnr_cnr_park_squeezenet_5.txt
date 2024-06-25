@@ -1,0 +1,16 @@
+Train Model: squeezenet
+Train Dataset: cnr
+Train View: cnr_park
+Train Epochs: 5
+Test Dataset: pklot
+Test View: ufpr04_sunny
+Accuracy: 0.44495726495726495
+F1: 0.0006155740227762388
+ROC AUC: 0.49996190224233694
+True Positives: 1
+False Positives: 1
+True Negatives: 2602
+False Negatives: 3246
+Confusion Matrix:
+[[2602    1]
+ [3246    1]]
