@@ -194,7 +194,7 @@ def identify_cnr_park_ext() -> None:
 
 if __name__ == "__main__":
     sys.path.append('../')
-    import model_visualization.test_model as test_model
+    import model_visualization.test_models as test_model
 
     # identify_acpds()
     identify_cnr_park_ext()

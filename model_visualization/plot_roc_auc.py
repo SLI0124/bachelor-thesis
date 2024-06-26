@@ -114,7 +114,7 @@ if __name__ == "__main__":
     import sys
 
     sys.path.append('../')
-    from test_model import load_model
+    from test_models import load_model
     import datasets_classes.SplitFileDataset as SplitFileDataset
 
     main()
