@@ -4,3 +4,4 @@ __pycache__/
 /data/datasets/
 /data/full_images/
 /data/predicted_images/
+/data/graphs/roc_auc/
