@@ -2,3 +2,5 @@ venv/
 .idea/
 __pycache__/
 /data/datasets/
+/data/full_images/
+/data/predicted_images/
