@@ -21,5 +21,4 @@ získají modely, na kterých je možné provést testování a vizualizaci.
 - [test_models.py](test_models.py) - Skript pro testování modelů. Skript načte všechny modely a všechny datasety a
   provede testování. Výsledky testování jsou uloženy do složky `data/testing_logs`.
 - [print_testing_logs.py](print_testing_logs.py) - Skript pro zpracování logů z trénování modelů. Na základě logů
-  vytvoří
-  tabulku s výsledky trénování modelů. Dataset a model se musí náležitě odkomenttovat.
+  vytvoří seznam s výsledky trénování modelů. Dataset a model se musí náležitě odkomentovat.
