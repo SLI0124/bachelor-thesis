@@ -117,8 +117,84 @@ def identify_acpds() -> None:
     cv2.destroyAllWindows()
 
 
+def identify_cnr_park_ext() -> None:
+    model_path = "../data/models/80_20_split/cnr/cnr_park_ext/5_epochs/shufflenet.pth"
+
+    all_locations = []
+    full_images_path = os.path.join(PATH_TO_FULL_IMAGES, 'cnr', 'FULL_IMAGE_1000x750')
+    for root, dirs, files in os.walk(full_images_path):
+        for file in files:
+            if file.endswith('.jpg'):
+                all_locations.append(os.path.join(root, file))
+
+    all_locations = [loc.replace("\\", "/") for loc in all_locations]
+
+    random_int = random.randint(0, len(all_locations) - 1)
+    one_image = all_locations[random_int]
+    camera = one_image.split('/')[7]
+
+    csv_path = os.path.join(PATH_TO_FULL_IMAGES, 'cnr')
+    csv_file = os.path.join(csv_path, camera + '.csv')
+
+    if not os.path.isfile(csv_file):
+        print(f"Error: CSV file {csv_file} does not exist.")
+        return
+
+    rows = []
+    with open(csv_file, 'r') as f:
+        csv_reader = csv.reader(f, delimiter=',')
+        for idx, row in enumerate(csv_reader):
+            if idx == 0:
+                continue
+            rows.append(row)
+
+    whole_parking_lot = cv2.imread(one_image)
+    # reshape it to 2592x1944 (original size downscaled due to privacy reasons)
+    whole_parking_lot = cv2.resize(whole_parking_lot, (2592, 1944))
+
+    model_state_dict = torch.load(model_path, map_location=device)
+    model = test_model.load_model(model_path)
+    model.load_state_dict(model_state_dict)
+    model.eval()
+
+    # each row is represented as [id, x1, y1, width, height]
+    for row in rows:
+        x1 = int(row[1])
+        y1 = int(row[2])
+        width = int(row[3])
+        height = int(row[4])
+
+        parking_spot = whole_parking_lot[y1:y1 + height, x1:x1 + width]
+
+        parking_spot = cv2.resize(parking_spot, (IMAGE_WIDTH, IMAGE_HEIGHT))
+
+        parking_spot = preprocess_image(parking_spot)
+
+        prediction = model(parking_spot.unsqueeze(0).to(device))
+
+        prediction = torch.argmax(prediction, dim=1).item()
+
+        if prediction == 0:
+            color = (0, 255, 0)
+        else:
+            color = (0, 0, 255)
+
+        cv2.rectangle(whole_parking_lot, (x1, y1), (x1 + width, y1 + height), color, 3)
+
+    whole_parking_lot = cv2.resize(whole_parking_lot, (1000, 800))
+    cv2.imshow('image', whole_parking_lot)
+    cv2.waitKey(0)
+
+    if not os.path.exists(os.path.join(SAVE_DIR, 'cnr')):
+        os.makedirs(os.path.join(SAVE_DIR, 'cnr'))
+
+    cv2.imwrite(os.path.join(SAVE_DIR, 'cnr', camera + '.jpg'), whole_parking_lot)
+    cv2.destroyAllWindows()
+
+
 if __name__ == "__main__":
     sys.path.append('../')
     import model_visualization.test_model as test_model
 
-    identify_acpds()
+    # identify_acpds()
+    identify_cnr_park_ext()
