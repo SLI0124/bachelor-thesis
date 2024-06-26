@@ -5,3 +5,4 @@ __pycache__/
 /data/full_images/
 /data/predicted_images/
 /data/graphs/roc_auc/
+/data/graphs/model_visualization/
