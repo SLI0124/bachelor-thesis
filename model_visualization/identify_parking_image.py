@@ -70,7 +70,6 @@ def identify_acpds() -> None:
         json_annotation = json.load(f)
 
     for coordinate in json_annotation['lots']:
-        print(coordinate['label'], coordinate['coordinates'])
         all_locations.append((coordinate['coordinates'], coordinate['label']))
 
     parking_lot = cv2.imread(os.path.join(full_images_path, one_image))
@@ -100,11 +99,6 @@ def identify_acpds() -> None:
         cv2.line(parking_lot, (x2, y2), (x3, y3), color, 3)
         cv2.line(parking_lot, (x3, y3), (x4, y4), color, 3)
         cv2.line(parking_lot, (x4, y4), (x1, y1), color, 3)
-
-        cv2.putText(parking_lot, f"True: {label}", (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 1,
-                    (255, 255, 255), 2)
-        cv2.putText(parking_lot, f"Predicted: {prediction}", (x1, y1 + 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
-                    (255, 255, 255), 2)
 
     parking_lot = cv2.resize(parking_lot, (1000, 800))
     cv2.imshow('image', parking_lot)
@@ -196,5 +190,5 @@ if __name__ == "__main__":
     sys.path.append('../')
     import model_visualization.test_models as test_model
 
-    # identify_acpds()
-    identify_cnr_park_ext()
+    identify_acpds()
+    # identify_cnr_park_ext()
