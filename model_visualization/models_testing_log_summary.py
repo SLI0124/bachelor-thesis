@@ -1,5 +1,6 @@
 import os
 import re
+import csv
 from typing import Dict, Tuple, List
 
 LOG_PATH = "../data/model_results/"
@@ -81,12 +82,37 @@ def save_results_by_accuracy(results: Dict[Tuple[Tuple[str, str, str], Tuple[str
                     f"Test Dataset: {key[1][0]}, Test View: {key[1][1]}, Accuracy: {value['accuracy']}\n")
 
 
+def save_results_as_csv(results: Dict[Tuple[Tuple[str, str, str], Tuple[str, str]], Dict[str, str]]) -> None:
+    sorted_results = sorted(results.items(), key=lambda x: float(x[1]["accuracy"]), reverse=True)
+    with open(os.path.join(SAVE_PATH, "results_by_accuracy.csv"), "w", newline='') as csvfile:
+        fieldnames = ["Train Dataset", "Train View", "Train Model", "Test Dataset", "Test View", "Accuracy",
+                      "F1", "ROC AUC", "True Positives", "False Positives", "True Negatives", "False Negatives"]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for key, value in sorted_results:
+            writer.writerow({
+                "Train Dataset": key[0][0],
+                "Train View": key[0][1],
+                "Train Model": key[0][2],
+                "Test Dataset": key[1][0],
+                "Test View": key[1][1],
+                "Accuracy": value["accuracy"],
+                "F1": value["f1"],
+                "ROC AUC": value["roc_auc"],
+                "True Positives": value["true_positives"],
+                "False Positives": value["false_positives"],
+                "True Negatives": value["true_negatives"],
+                "False Negatives": value["false_negatives"]
+            })
+
+
 def main() -> None:
     log_files = get_all_log_files(LOG_PATH)
     results = collect_results(log_files)
     print_worst_accuracies(results)
     print_best_accuracies(results)
     save_results_by_accuracy(results)
+    save_results_as_csv(results)
 
 
 if __name__ == "__main__":
