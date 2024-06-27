@@ -16,7 +16,7 @@ NORMALIZE_STD = [0.229, 0.224, 0.225]
 
 DATASET_DIR = '../data/datasets/'
 
-NUMBER_OF_PLOTS = 16
+NUMBER_OF_PLOTS = 9
 
 
 def load_dataset(path) -> DataLoader:
@@ -97,7 +97,7 @@ def main() -> None:
         image = image.clip(0, 1)
         ax.imshow(image)
         ax.set_title(f"Skutečnost: {true_label}\nPředpověď: {predicted_label}\nPravděpodobnost: {confidence:.2f}",
-                     fontsize=10)
+                     fontsize=12)
         ax.axis('off')
 
     plt.tight_layout()
