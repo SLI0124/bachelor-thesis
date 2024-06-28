@@ -22,3 +22,6 @@ získají modely, na kterých je možné provést testování a vizualizaci.
   provede testování. Výsledky testování jsou uloženy do složky `data/testing_logs`.
 - [print_testing_logs.py](print_testing_logs.py) - Skript pro zpracování logů z trénování modelů. Na základě logů
   vytvoří seznam s výsledky trénování modelů. Dataset a model se musí náležitě odkomentovat.
+- [visualize_training_metrics.py](visualize_training_metrics.py) - Skript pro zpracování logů z trénování modelů. Na
+  základě logů vytvoří grafy s vývojem metrik během trénování a uloží je do složky `data/graphs/training_metrics`.
+  Obsahuje testovací a validační metriky a grafy pro jednotlivé epochy. 
