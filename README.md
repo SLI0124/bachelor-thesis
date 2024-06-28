@@ -13,7 +13,6 @@ Pro trénování a testování modelu byly použity datasety:
 - [CNRPARK a CNRPark+EXT](http://cnrpark.it/)
 - [Action Camera Parking Lot Dataset](https://github.com/martin-marek/parking-space-occupancy)
 - [ACPDS](https://github.com/Eighonet/parking-research)
-- [ACMPS](https://github.com/Eighonet/parking-research)
 
 # Instalace
 
@@ -81,4 +80,6 @@ python3 model_training.py --dataset cnr --camera_view cnr_park_ext --model mobil
 
 ## Vyhodnocení modelů, vizualizace výsledků, ...
 
-TODO
+Pro vyhodnocení modelů, vizualizaci výsledků a další informace se podívejte do
+složky [model_visualization](model_visualization). Zde je již připravený
+další [README soubor](model_visualization/README.md), který obsahuje informace o skriptech pro vizualizaci modelů.

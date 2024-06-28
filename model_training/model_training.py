@@ -300,7 +300,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Train a model on a dataset.')
 
     parser.add_argument('--dataset', type=str, required=True,
-                        help='The dataset to use. Choose between pklot, cnr, acmps, acpds, spkl')
+                        help='The dataset to use. Choose between pklot, cnr, acpds, spkl')
     parser.add_argument('--camera_view', type=str, required=True,
                         help='For the PKLot dataset, choose between all, all_cloudy, all_sunny, all_rainy, '
                              'puc, puc_cloudy, puc_sunny, puc_rainy,'
@@ -310,7 +310,6 @@ def main() -> None:
                              ' (camera 0-9), all (all cameras - cnr_park and cnr_park_ext),'
                              'cnr_park_ext_cloudy, cnr_park_ext_sunny, cnr_park_ext_rainy,'
                              'for ACPDS default and only option is all, '
-                             'for ACPMS default and only option is all, '
                              'for SPKL default and only option is all.')
     parser.add_argument('--model', type=str, required=True,
                         help='The model to use. Choose between mobilenet, squeezenet and shufflenet.')

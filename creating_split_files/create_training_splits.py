@@ -52,7 +52,7 @@ def process_dataset(dataset: str, split_ratio: int) -> None:
                 images = [image.strip() for image in images]
                 save_images_to_file(os.path.join(SPLIT_DIR, dataset), images, split_ratio, prefix)
 
-    # Process other datasets (e.g., acmps, acpds, spkl)
+    # Process other datasets (e.g. acpds, spkl)
     with open(os.path.join(SPLIT_DIR, dataset, 'all.txt'), 'r') as f:
         images = f.readlines()
         images = [image.strip() for image in images]

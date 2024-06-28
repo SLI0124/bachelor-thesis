@@ -36,29 +36,31 @@ else
   echo "data/splits directory already exists"
 fi
 
-# download the splits, unzip it and delete the zip file and clean the directory
-# if you have zip files already downloaded, put it in the data/splits directory and it will not download it again
-if [ ! -f "data/splits/splits.zip" ];
+# make data/full_images directory, if it doesn't exist
+if [ ! -d "data/full_images" ];
 then
-  if [ ! -f "data/splits/splits.zip" ];
-  then
-    wget -P data/splits https://github.com/fabiocarrara/deep-parking/releases/download/archive/splits.zip
-  else
-    echo "data/splits/splits.zip already exists"
-  fi
+  mkdir -p data/full_images
+  echo "data/full_images directory created"
 else
-  echo "data/splits/splits.zip already exists"
+  echo "data/full_images directory already exists"
 fi
 
-echo "Extracting splits..."
-unzip -q data/splits/splits.zip -d data/splits
-rm data/splits/splits.zip
-mv data/splits/splits/* data/splits/
-rm -rf data/splits/splits
-mv data/splits/PKLot/ data/splits/pklot_download
+# download CNRPark-EXT full images, unzip it and delete the zip file and clean the directory
+# if you have zip files already downloaded, put it in the data/full_images directory and it will not download it again
+if [ ! -f "data/full_images/CNR-EXT_FULL_IMAGE_1000x750.tar" ];
+then
+  wget -P data/full_images https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNR-EXT_FULL_IMAGE_1000x750.tar
+else
+  echo "data/full_images/CNR-EXT_FULL_IMAGE_1000x750.tar already exists"
+fi
+
+echo "Extracting CNRPark-EXT full images..."
+mkdir -p data/full_images/cnr
+tar -xf data/full_images/CNR-EXT_FULL_IMAGE_1000x750.tar -C data/full_images/cnr
+rm data/full_images/CNR-EXT_FULL_IMAGE_1000x750.tar
 
 # make data/datasets/cnr directory, if it doesn't exist and proceed to download the datasets
-if [ ! -d "data/datasets/cnr" ]; 
+if [ ! -d "data/datasets/cnr" ];
 then
   mkdir -p data/datasets/cnr
   echo "data/datasets/cnr directory created"
@@ -114,39 +116,13 @@ then
   tar -xzf data/datasets/PKLot.tar.gz -C data/datasets/pklot
 
   echo "Cleaning PKLot dataset..."
-  rm -rf data/datasets/pklot/PKLot/PKLot
+  mkdir -p data/full_images/pklot
+  mv data/datasets/pklot/PKLot/PKLot/* data/full_images/pklot
   mv data/datasets/pklot/PKLot/PKLotSegmented/ data/datasets/pklot/
   rm -rf data/datasets/pklot/PKLot
   rm data/datasets/PKLot.tar.gz
 else
   echo "data/datasets/pklot directory already exists"
-fi
-
-# make data/datasets/acmps directory, if it doesn't exist and proceed to download the dataset
-if [ ! -d "data/datasets/acmps" ];
-then
-  mkdir -p data/datasets/acmps
-  echo "data/datasets/acmps directory created"
-
-  # download the ACMPS dataset, unzip it and delete the zip file and clean the directory
-  # if you have zip files already downloaded, put it in the data/datasets directory and it will not download it again
-  # but it will delete the zip file and clean the directory
-  if [ ! -f "data/datasets/ACMPS.zip" ];
-  then
-    wget -P data/datasets https://sc.link/1KZv
-  else
-    echo "data/datasets/ACMPS.zip already exists"
-  fi
-
-  echo "Extracting ACMPS dataset..."
-  unzip -q data/datasets/ACMPS.zip -d data/datasets/acmps
-
-  echo "Cleaning ACMPS dataset..."
-  mv data/datasets/acmps/ACMPS/ACMPS/patch_markup/ data/datasets/acmps/
-  rm -rf data/datasets/acmps/ACMPS/
-  rm data/datasets/ACMPS.zip
-else
-  echo "data/datasets/acmps directory already exists"
 fi
 
 # make data/datasets/spkl directory, if it doesn't exist and proceed to download the dataset
@@ -169,7 +145,10 @@ then
   unzip -q data/datasets/SPKLv2_test.zip -d data/datasets/spkl
 
   echo "Cleaning SPKLv2 dataset..."
+  mkdr data/full_images/spkl
   mv data/datasets/spkl/SPKLv2/SPKLv2/patch_markup/ data/datasets/spkl/
+  mv data/datasets/spkl/SPKLv2/SPKLv2/images/ data/full_images/spkl
+  mv data/datasets/spkl/SPKLv2/SPKLv2/int_markup/ data/full_images/spkl
   rm -rf data/datasets/spkl/SPKLv2
   rm data/datasets/spkl/patch_markup/*.json
   rm data/datasets/SPKLv2_test.zip
@@ -198,6 +177,9 @@ then
 
   echo "Cleaning ACPDS dataset..."
   mv data/datasets/acpds/ACPDS/ACPDS/patch_markup/ data/datasets/acpds/
+  mkdir -p data/full_images/acpds
+  mv data/datasets/acpds/ACPDS/ACPDS/images/ data/full_images/acpds
+  mv data/datasets/acpds/ACPDS/ACPDS/int_markup/ data/full_images/acpds
   rm -rf data/datasets/acpds/ACPDS/
   rm data/datasets/acpds/patch_markup/*.json
   rm data/datasets/ACPDS.zip

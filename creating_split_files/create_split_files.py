@@ -25,10 +25,8 @@ def save_images_to_file(split_directory: str, filename: str, images: List[str]) 
             f.write(image + '\n')
 
 
-def process_and_save_acmps_acpds_spkl(directory: str, dataset_name: str) -> None:
+def process_and_save_acpds_spkl(directory: str, dataset_name: str) -> None:
     local_directory = os.path.join(directory, 'patch_markup')
-    if dataset_name == 'acmps':
-        local_directory = os.path.join(local_directory, 'classes')
 
     status_labels = {'Busy': 1, 'Free': 0}
     images = get_image_paths(local_directory, status_labels)
@@ -171,9 +169,8 @@ def process_weather_pklot(dataset_name: str) -> None:
 def main() -> None:
     directory = '../data/datasets/'
     dataset_processors = {
-        'acmps': process_and_save_acmps_acpds_spkl,
-        'acpds': process_and_save_acmps_acpds_spkl,
-        'spkl': process_and_save_acmps_acpds_spkl,
+        'acpds': process_and_save_acpds_spkl,
+        'spkl': process_and_save_acpds_spkl,
         'cnr': process_and_save_cnr,
         'pklot': process_and_save_pklot,
     }

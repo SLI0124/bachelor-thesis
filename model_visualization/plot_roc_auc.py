@@ -29,8 +29,6 @@ def model_paths() -> str:
 
 def dataset_paths() -> str:
     for root, _, files in os.walk(PATH_TO_DATASETS):
-        if 'acmps' in root:
-            continue
         for file in files:
             if file.endswith('_test_80_20.txt'):
                 yield os.path.join(root, file).replace("\\", "/")

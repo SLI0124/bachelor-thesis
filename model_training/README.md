@@ -5,7 +5,6 @@
 - `--dataset`: Název datasetu, který chcete použít. Vyberte mezi:
     - `pklot`
     - `cnrpark`
-    - `acmps`
     - `acpds`
     - `spkl`
 
@@ -19,7 +18,6 @@
         - `cnr_park` (camera A a B), `cnr_park_ext` (camera 0-9), `all` (cnr_park a cnr_park_ext),
         - `cnr_park_ext_cloudy`, `cnr_park_ext_sunny`, `cnr_park_ext_rainy`
     - pro ACPDS vyberte `all`
-    - pro ACPMS vyberte `all`
     - pro SPKL vyberte `all`
 
 - `--model`: Název modelu, který chcete použít. Vyberte mezi:
@@ -69,7 +67,3 @@ python model_training.py --dataset pklot --camera_view all_rainy --model mobilen
 Pokud chcete vizualizovat více metrik, jako je ztráta, přesnost, matice záměn atd., můžete nakouknot do složky a jejího
 obsahu.
 Je zde [popisující skript](../model_visualization/README.md) pro vizualizaci modelu.
-
-
-
-
