@@ -2,7 +2,7 @@ import os
 import sys
 import matplotlib.pyplot as plt
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, ConcatDataset
 from torchvision import transforms
 import torch.nn.functional as func
 import math
@@ -16,7 +16,25 @@ NORMALIZE_STD = [0.229, 0.224, 0.225]
 
 DATASET_DIR = '../data/datasets/'
 
-NUMBER_OF_PLOTS = 9
+NUMBER_OF_PLOTS_PER_DATASET = 5
+TOTAL_DATASETS = 5
+TOTAL_PLOTS = NUMBER_OF_PLOTS_PER_DATASET * TOTAL_DATASETS
+
+MODEL_PATHS = {
+    'CNR Park Ext': "../data/models/80_20_split/cnr/cnr_park_ext/5_epochs/mobilenet.pth",
+    'CNR Park': "../data/models/80_20_split/cnr/cnr_park/5_epochs/mobilenet.pth",
+    'PKLot': "../data/models/80_20_split/pklot/all/5_epochs/mobilenet.pth",
+    'ACPDS': "../data/models/80_20_split/acpds/all/5_epochs/mobilenet.pth",
+    'SPKL': "../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth"
+}
+
+class_names = {
+    'CNR Park Ext': ['0', '1'],
+    'CNR Park': ['0', '1'],
+    'PKLot': ['0', '1'],
+    'ACPDS': ['0', '1'],
+    'SPKL': ['0', '1']
+}
 
 
 def load_dataset(path) -> DataLoader:
@@ -32,85 +50,71 @@ def load_dataset(path) -> DataLoader:
 
 
 def main() -> None:
-    # dataset_path = "../data/splits/cnr/cnr_park_ext_test_80_20.txt"
-    # model_path = "../data/models/80_20_split/cnr/cnr_park_ext/5_epochs/mobilenet.pth"
+    dataset_paths = [
+        "../data/splits/cnr/cnr_park_ext_test_80_20.txt",
+        "../data/splits/cnr/cnr_park_test_80_20.txt",
+        "../data/splits/pklot/all_test_80_20.txt",
+        "../data/splits/acpds/all_test_80_20.txt",
+        "../data/splits/spkl/all_test_80_20.txt"
+    ]
 
-    # dataset_path = "../data/splits/cnr/cnr_park_test_80_20.txt"
-    # model_path = "../data/models/80_20_split/cnr/cnr_park/5_epochs/mobilenet.pth"
+    dataset_names = ['CNR Park Ext', 'CNR Park', 'PKLot', 'ACPDS', 'SPKL']
 
-    # dataset_path = "../data/splits/pklot/all_test_80_20.txt"
-    # model_path = "../data/models/80_20_split/pklot/all/5_epochs/mobilenet.pth"
+    fig, axes = plt.subplots(TOTAL_DATASETS, NUMBER_OF_PLOTS_PER_DATASET, figsize=(15, 15))
+    fig.subplots_adjust(hspace=0.5)  # Increase vertical spacing between subplots
 
-    # dataset_path = "../data/splits/acpds/all_test_80_20.txt"
-    # model_path = "../data/models/80_20_split/acpds/all/5_epochs/mobilenet.pth"
+    for idx, (dataset_path, dataset_name) in enumerate(zip(dataset_paths, dataset_names)):
+        dataset_loader = load_dataset(dataset_path)
+        model_path = MODEL_PATHS[dataset_name]
+        model = test_model.load_model(model_path)
+        model.to(device)
+        model.eval()
 
-    dataset_path = "../data/splits/spkl/all_test_80_20.txt"
-    model_path = "../data/models/80_20_split/spkl/all/5_epochs/mobilenet.pth"
+        incorrect_images = []
 
-    incorrect_images = []
+        for plot_idx in range(NUMBER_OF_PLOTS_PER_DATASET):
+            for images, labels in dataset_loader:
+                images = images.to(device)
+                labels = labels.to(device)
+                outputs = model(images)
 
-    model = test_model.load_model(model_path)
-    model.to(device)
-    model.eval()
+                probabilities = func.softmax(outputs, dim=1)
+                confidences, predicted = torch.sigmoid(probabilities).max(dim=1)
 
-    model_name = model_path.split('/')[-1].split('.')[0]
-    model_dataset_name = model_path.split('/')[4]
-    model_dataset_view = model_path.split('/')[5]
-
-    test_dataset_name = dataset_path.split('/')[3]
-    test_dataset_view = dataset_path.split('/')[4].split('_test_80_20.txt')[0]
-
-    dataset_loader = load_dataset(dataset_path)
-    idx = 0
-    batch_count = 0
-
-    for images, labels in dataset_loader:
-        batch_count += 1
-        print(f"Processing batch {batch_count}...\n\tNumber of incorrect images collected: "
-              f"{len(incorrect_images)}/{NUMBER_OF_PLOTS}")
-
-        images = images.to(device)
-        labels = labels.to(device)
-        outputs = model(images)
-
-        probabilities = func.softmax(outputs, dim=1)
-        confidences, predicted = torch.sigmoid(probabilities).max(dim=1)
-
-        incorrect = (predicted != labels).nonzero(as_tuple=True)[0]
-        for index in incorrect:
-            image = images[index].cpu()
-            incorrect_images.append((image, labels[index].item(), predicted[index].item(), confidences[index].item()))
-            idx += 1
-            if idx == NUMBER_OF_PLOTS:
+                incorrect = (predicted != labels).nonzero(as_tuple=True)[0]
+                for index in incorrect:
+                    image = images[index].cpu()
+                    incorrect_images.append((image, labels[index].item(), predicted[index].item(),
+                                             confidences[index].item(), class_names[dataset_name]))
+                    if len(incorrect_images) == NUMBER_OF_PLOTS_PER_DATASET:
+                        break
+                if len(incorrect_images) == NUMBER_OF_PLOTS_PER_DATASET:
+                    break
+            if len(incorrect_images) == NUMBER_OF_PLOTS_PER_DATASET:
                 break
-        if idx == NUMBER_OF_PLOTS:
-            break
 
-    # Plotting the images with formatted titles
-    fig = plt.figure(figsize=(10, 10))
-    fig.subplots_adjust(hspace=0.5)  # Adjust vertical spacing between subplots
-    for i in range(NUMBER_OF_PLOTS):
-        ax = fig.add_subplot(math.ceil(math.sqrt(NUMBER_OF_PLOTS)), math.ceil(math.sqrt(NUMBER_OF_PLOTS)), i + 1)
-        image, true_label, predicted_label, confidence = incorrect_images[i]
-        image = image.permute(1, 2, 0).numpy()
-        image = image * NORMALIZE_STD + NORMALIZE_MEAN
-        image = image.clip(0, 1)
-        ax.imshow(image)
-        ax.set_title(f"Skutečnost: {true_label}\nPředpověď: {predicted_label}\nPravděpodobnost: {confidence:.2f}",
-                     fontsize=12)
-        ax.axis('off')
+        for col_idx, (image_data) in enumerate(incorrect_images):
+            ax = axes[idx, col_idx]
+            image, true_label, predicted_label, confidence, classes = image_data
+            image = image.permute(1, 2, 0).numpy()
+            image = image * NORMALIZE_STD + NORMALIZE_MEAN
+            image = image.clip(0, 1)
+            ax.imshow(image)
+            ax.set_title(f'Skutečnost: {classes[true_label]}\n Predikce: {classes[predicted_label]}')
+            ax.axis('off')
+
+        axes[idx, 0].annotate(dataset_name, xy=(0, 0.5), xytext=(-axes[idx, 0].yaxis.labelpad - 5, 0),
+                              xycoords=axes[idx, 0].yaxis.label, textcoords='offset points',
+                              size='large', ha='right', va='center')
 
     plt.tight_layout()
 
-    save_path = (f'../data/incorrectly_identified_images/{model_name}_{model_dataset_name}_{model_dataset_view}/'
-                 f'{test_dataset_name}_{test_dataset_view}')
+    save_path = '../data/incorrectly_identified_images/all_datasets.png'
 
-    print(save_path)
+    if not os.path.exists(os.path.dirname(save_path)):
+        os.makedirs(os.path.dirname(save_path))
 
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-
-    plt.savefig(os.path.join(save_path, 'incorrectly_identified.png'))
+    plt.savefig(save_path)
     plt.show()
 
 
