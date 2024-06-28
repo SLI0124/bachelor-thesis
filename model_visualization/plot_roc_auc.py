@@ -67,13 +67,13 @@ def plot_roc_auc(labels: np.ndarray, thresholds: np.ndarray, train_model_string:
     roc_auc = auc(fpr, tpr)
 
     plt.figure()
-    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc)
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC křivka (plocha = %0.2f)' % roc_auc)
     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title(f'ROC Curve: {train_model_string} {train_dataset_string} {train_view_string} - '
+    plt.xlabel('FPR')
+    plt.ylabel('TPR')
+    plt.title(f'ROC křivka: {train_model_string} {train_dataset_string} {train_view_string} - '
               f'{test_dataset_string}_{test_view_string}')
     plt.legend(loc="lower right")
 
