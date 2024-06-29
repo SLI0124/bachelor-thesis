@@ -141,6 +141,8 @@ then
     echo "data/datasets/SPKLv2_test.zip already exists"
   fi
 
+  mv data/datasets/1KZu data/datasets/SPKLv2_test.zip
+
   echo "Extracting SPKLv2 dataset..."
   unzip -q data/datasets/SPKLv2_test.zip -d data/datasets/spkl
 
@@ -171,6 +173,8 @@ then
   else
     echo "data/datasets/ACPDS.zip already exists"
   fi
+
+  mv data/datasets/1KZq data/datasets/ACPDS.zip
 
   echo "Extracting ACPDS dataset..."
   unzip -q data/datasets/ACPDS.zip -d data/datasets/acpds
