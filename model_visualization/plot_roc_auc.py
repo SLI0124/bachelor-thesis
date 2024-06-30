@@ -65,14 +65,14 @@ def plot_roc_auc(labels: np.ndarray, thresholds: np.ndarray, train_model_string:
     roc_auc = auc(fpr, tpr)
 
     plt.figure()
-    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC křivka (plocha = %0.2f)' % roc_auc)
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC AUC = %0.2f' % roc_auc)
     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('FPR')
     plt.ylabel('TPR')
-    plt.title(f'ROC křivka: {train_model_string} {train_dataset_string} {train_view_string} - '
-              f'{test_dataset_string}_{test_view_string}')
+    # set the title to just roc_auc
+    plt.title(f'ROC křivka')
     plt.legend(loc="lower right")
 
     save_path = f'{SAVE_DIR}{train_model_string}_{train_dataset_string}_{train_view_string}/' \
