@@ -160,10 +160,11 @@ def identify_cnr_park_ext() -> None:
     model.load_state_dict(model_state_dict)
     model.eval()
 
-    total_time = 0
+    total_times = []
 
     # each row is represented as [id, x1, y1, width, height]
     for row in rows:
+        id_space = row[0]
         x1 = int(row[1])
         y1 = int(row[2])
         width = int(row[3])
@@ -186,9 +187,14 @@ def identify_cnr_park_ext() -> None:
         else:
             color = (0, 0, 255)
 
+        total_times.append(end_time - start_time)
+
+        cv2.putText(whole_parking_lot, id_space, (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2, cv2.LINE_AA)
+
         cv2.rectangle(whole_parking_lot, (x1, y1), (x1 + width, y1 + height), color, 3)
 
-    print(f"Average time for detection: {total_time / len(rows)}, Total time: {total_time}")
+    print(f"Average time for detection: {sum(total_times) / len(rows)}, "
+          f"Total time: {sum(total_times)}")
 
     whole_parking_lot = cv2.resize(whole_parking_lot, (1000, 800))
     cv2.imshow('image', whole_parking_lot)
@@ -363,6 +369,6 @@ if __name__ == "__main__":
     import model_visualization.test_models as test_model
 
     # identify_acpds()
-    # identify_cnr_park_ext()
+    identify_cnr_park_ext()
     # identify_spkl()
     # identify_pklot()
